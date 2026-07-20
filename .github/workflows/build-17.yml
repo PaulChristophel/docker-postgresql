@@ -20,6 +20,10 @@ env:
   IMAGE_NAME: docker.io/pcm0/postgres
   PG_MAJOR: "17"
   PG_VERSION: "17.10"
+  PG_SHA256: 078a03516dcdbdb705fecaf415ea3d13a956c589e46f09fed68a06fb00598c90
+  PGAUDIT_VERSION: "17.1"
+  PGAUDIT_COMMIT: 266ada37842d9c6d7a0623065cbfe915f2572f74
+  PGAUDIT_SOURCE_SHA256: 3c5f72bd54f7a7e1c82a4fd1fdb75cc2cdf61eba4913a579f69071eb42c49331
 
 jobs:
   build:
@@ -46,8 +50,7 @@ jobs:
           tags: |
             type=raw,value=${{ env.PG_VERSION }}-photon
             type=raw,value=${{ env.PG_MAJOR }}-photon
-            type=raw,value=latest
-            type=sha,prefix=sha-
+            type=sha,prefix=${{ env.PG_MAJOR }}-sha-
 
       - name: Record build timestamp
         id: build
@@ -65,6 +68,12 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           build-args: |
+            PG_MAJOR=${{ env.PG_MAJOR }}
+            PG_VERSION=${{ env.PG_VERSION }}
+            PG_SHA256=${{ env.PG_SHA256 }}
+            PGAUDIT_VERSION=${{ env.PGAUDIT_VERSION }}
+            PGAUDIT_COMMIT=${{ env.PGAUDIT_COMMIT }}
+            PGAUDIT_SOURCE_SHA256=${{ env.PGAUDIT_SOURCE_SHA256 }}
             IMAGE_REPOSITORY=${{ env.IMAGE_NAME }}
             IMAGE_REVISION=${{ github.sha }}
             IMAGE_CREATED=${{ steps.build.outputs.created }}

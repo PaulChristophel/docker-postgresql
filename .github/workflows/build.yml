@@ -20,6 +20,7 @@ env:
   IMAGE_NAME: docker.io/pcm0/postgres
   PG_MAJOR: "18"
   PG_VERSION: "18.4"
+  PG_SHA256: 81a81ec695fb0c7901407defaa1d2f7973617154cf27ba74e3a7ab8e64436094
 
 jobs:
   build:
@@ -65,6 +66,9 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           build-args: |
+            PG_MAJOR=${{ env.PG_MAJOR }}
+            PG_VERSION=${{ env.PG_VERSION }}
+            PG_SHA256=${{ env.PG_SHA256 }}
             IMAGE_REPOSITORY=${{ env.IMAGE_NAME }}
             IMAGE_REVISION=${{ github.sha }}
             IMAGE_CREATED=${{ steps.build.outputs.created }}
