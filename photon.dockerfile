@@ -18,9 +18,10 @@ ARG PG_MAJOR=18
 ARG PG_VERSION=18.4
 ARG PG_SHA256=81a81ec695fb0c7901407defaa1d2f7973617154cf27ba74e3a7ab8e64436094
 ARG PG_CFLAGS="-O2 -pipe"
+ARG WITH_UNTRUSTED_LANGUAGES=false
 
 USER root
-RUN tdnf install -y \
+RUN build_packages="\
       bison \
       binutils \
       clang \
@@ -41,22 +42,25 @@ RUN tdnf install -y \
       openldap-devel \
       openssl-devel \
       Linux-PAM-devel \
-      perl \
-      python3-devel \
       readline-devel \
       tar \
-      tcl-devel \
       wget \
       xz \
       zlib-devel \
-      zstd-devel \
+      zstd-devel" \
+ && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
+      build_packages="${build_packages} perl python3-devel tcl-devel"; \
+    fi \
+ && tdnf install -y ${build_packages} \
  && wget -O /tmp/postgresql.tar.bz2 https://ftp.postgresql.org/pub/source/v${PG_VERSION}/postgresql-${PG_VERSION}.tar.bz2 \
  && echo "${PG_SHA256}  /tmp/postgresql.tar.bz2" | sha256sum -c - \
  && mkdir -p /tmp/postgresql-src \
  && tar -xjf /tmp/postgresql.tar.bz2 -C /tmp/postgresql-src --strip-components=1 \
- && PERL_CORE="$(perl -MConfig -e 'print "$Config{archlibexp}/CORE"')" \
  && mkdir -p /usr/local/include \
- && cp "${PERL_CORE}"/*.h /usr/local/include/ \
+ && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
+      PERL_CORE="$(perl -MConfig -e 'print "$Config{archlibexp}/CORE"')"; \
+      cp "${PERL_CORE}"/*.h /usr/local/include/; \
+    fi \
  && groupadd -r postgres-build \
  && useradd -r -g postgres-build -d /tmp/postgres-build postgres-build \
  && mkdir -p /tmp/postgres-build /tmp/postgres-install \
@@ -67,7 +71,11 @@ RUN tdnf install -y \
 
 USER postgres-build
 WORKDIR /tmp/postgresql-src
-RUN ./configure \
+RUN configure_untrusted="" \
+ && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
+      configure_untrusted="--with-perl --with-python --with-tcl"; \
+    fi \
+ && ./configure \
       CFLAGS="${PG_CFLAGS}" \
       --prefix=/usr/pgsql/${PG_MAJOR} \
       --with-gssapi \
@@ -79,10 +87,8 @@ RUN ./configure \
       --with-lz4 \
       --with-ssl=openssl \
       --with-pam \
-      --with-perl \
-      --with-python \
-      --with-tcl \
       --with-zstd \
+      ${configure_untrusted} \
  && make -j"$(nproc)" world-bin \
  && make -j"$(nproc)" check-world \
  && make install-world-bin DESTDIR=/tmp/postgres-install
@@ -162,6 +168,7 @@ FROM $BASE
 ARG BASE
 ARG PG_MAJOR=18
 ARG PG_VERSION=18.4
+ARG WITH_UNTRUSTED_LANGUAGES=false
 ARG PG_CRON_VERSION=1.6.7
 ARG PG_CRON_COMMIT=465b38c737f584d520229f5a1d69d1d44649e4e5
 ARG PGVECTOR_VERSION=0.8.5
@@ -206,7 +213,7 @@ LABEL edu.gatech.image.repository="${IMAGE_REPOSITORY}"
 
 USER root
 # Top line of installs is vuln prevention
-RUN tdnf install -y \
+RUN runtime_packages="\
       sqlite-libs libssh2 \
       icu \
       krb5 \
@@ -217,13 +224,14 @@ RUN tdnf install -y \
       lz4 \
       openldap \
       openssl \
-      perl \
-      python3 \
       readline \
       shadow \
-      tcl \
       zlib \
-      zstd \
+      zstd" \
+ && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
+      runtime_packages="${runtime_packages} perl python3 tcl"; \
+    fi \
+ && tdnf install -y ${runtime_packages} \
  && tdnf clean all \
  && rm -rf /var/cache/tdnf \
  && groupadd -g 26 postgres \
@@ -234,7 +242,18 @@ RUN tdnf install -y \
 COPY --from=postgres-builder /tmp/postgres-install/usr/pgsql/${PG_MAJOR} /usr/pgsql/${PG_MAJOR}
 COPY --from=extension-builder /tmp/extension-artifacts/ /
 RUN chown -R root:root /usr/pgsql/${PG_MAJOR} \
- && chmod -R a-w /usr/pgsql/${PG_MAJOR}
+ && chmod -R a-w /usr/pgsql/${PG_MAJOR} \
+ && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "false" ]; then \
+      for runtime in perl python3 tclsh; do \
+        if command -v "${runtime}" >/dev/null; then \
+          echo "unexpected language runtime in safe image: ${runtime}" >&2; \
+          exit 1; \
+        fi; \
+      done; \
+      for extension in plperl plpython3u pltcl; do \
+        test ! -e "/usr/pgsql/${PG_MAJOR}/share/extension/${extension}.control"; \
+      done; \
+    fi
 ENV PATH=/usr/pgsql/${PG_MAJOR}/bin:$PATH
 USER postgres
 RUN postgres --version \
@@ -250,9 +269,12 @@ RUN postgres --version \
       -c 'CREATE EXTENSION vector' \
       -c 'CREATE EXTENSION pg_cron' \
       -c 'CREATE EXTENSION pgaudit' \
-      -c 'CREATE EXTENSION plperl' \
-      -c 'CREATE EXTENSION plpython3u' \
-      -c 'CREATE EXTENSION pltcl' \
       -c 'SELECT extname, extversion FROM pg_extension ORDER BY extname' \
+ && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
+      psql -h /tmp/pg-smoke-socket -d postgres -v ON_ERROR_STOP=1 \
+        -c 'CREATE EXTENSION plperl' \
+        -c 'CREATE EXTENSION plpython3u' \
+        -c 'CREATE EXTENSION pltcl'; \
+    fi \
  && pg_ctl -D /tmp/pg-smoke-data -m fast -w stop \
  && rm -rf /tmp/pg-smoke-data /tmp/pg-smoke-socket

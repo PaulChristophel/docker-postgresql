@@ -29,7 +29,36 @@ env:
 
 jobs:
   build:
+    name: Build ${{ matrix.tag_variant }} image
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - variant: photon
+            dockerfile: photon.dockerfile
+            tag_variant: photon
+            untrusted: false
+            latest: false
+            sha_prefix: 19-sha-
+          - variant: photon
+            dockerfile: photon.dockerfile
+            tag_variant: photon-untrusted
+            untrusted: true
+            latest: false
+            sha_prefix: 19-photon-untrusted-sha-
+          - variant: fedora
+            dockerfile: fedora.dockerfile
+            tag_variant: fedora
+            untrusted: false
+            latest: false
+            sha_prefix: 19-fedora-sha-
+          - variant: fedora
+            dockerfile: fedora.dockerfile
+            tag_variant: fedora-untrusted
+            untrusted: true
+            latest: false
+            sha_prefix: 19-fedora-untrusted-sha-
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -50,9 +79,10 @@ jobs:
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ env.PG_VERSION }}-photon
-            type=raw,value=${{ env.PG_MAJOR }}-photon
-            type=sha,prefix=${{ env.PG_MAJOR }}-sha-
+            type=raw,value=${{ env.PG_VERSION }}-${{ matrix.tag_variant }}
+            type=raw,value=${{ env.PG_MAJOR }}-${{ matrix.tag_variant }}
+            type=raw,value=latest,enable=${{ matrix.latest }}
+            type=sha,prefix=${{ matrix.sha_prefix }}
 
       - name: Record build timestamp
         id: build
@@ -63,7 +93,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .
-          file: photon.dockerfile
+          file: ${{ matrix.dockerfile }}
           platforms: linux/amd64
           push: true
           provenance: false
@@ -73,6 +103,7 @@ jobs:
             PG_MAJOR=${{ env.PG_MAJOR }}
             PG_VERSION=${{ env.PG_VERSION }}
             PG_SHA256=${{ env.PG_SHA256 }}
+            WITH_UNTRUSTED_LANGUAGES=${{ matrix.untrusted }}
             PG_CRON_COMMIT=${{ env.PG_CRON_COMMIT }}
             PG_CRON_SOURCE_SHA256=${{ env.PG_CRON_SOURCE_SHA256 }}
             PGAUDIT_VERSION=${{ env.PGAUDIT_VERSION }}
@@ -81,8 +112,8 @@ jobs:
             IMAGE_REPOSITORY=${{ env.IMAGE_NAME }}
             IMAGE_REVISION=${{ github.sha }}
             IMAGE_CREATED=${{ steps.build.outputs.created }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=postgres-${{ env.PG_MAJOR }}-${{ matrix.tag_variant }}
+          cache-to: type=gha,mode=max,scope=postgres-${{ env.PG_MAJOR }}-${{ matrix.tag_variant }}
 
       - name: Generate provenance attestation
         uses: actions/attest@v4
