@@ -38,7 +38,7 @@ jobs:
             tag_variant: photon
             untrusted: false
             latest: false
-            sha_prefix: 14-sha-
+            sha_prefix: 14-photon-standard-sha-
           - variant: photon
             dockerfile: photon.dockerfile
             tag_variant: photon-untrusted
@@ -50,13 +50,25 @@ jobs:
             tag_variant: fedora
             untrusted: false
             latest: false
-            sha_prefix: 14-fedora-sha-
+            sha_prefix: 14-fedora-standard-sha-
           - variant: fedora
             dockerfile: fedora.dockerfile
             tag_variant: fedora-untrusted
             untrusted: true
             latest: false
             sha_prefix: 14-fedora-untrusted-sha-
+          - variant: rockylinux
+            dockerfile: rockylinux.dockerfile
+            tag_variant: rockylinux
+            untrusted: false
+            latest: false
+            sha_prefix: 14-rockylinux-standard-sha-
+          - variant: rockylinux
+            dockerfile: rockylinux.dockerfile
+            tag_variant: rockylinux-untrusted
+            untrusted: true
+            latest: false
+            sha_prefix: 14-rockylinux-untrusted-sha-
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
