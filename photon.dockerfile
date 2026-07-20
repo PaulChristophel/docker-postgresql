@@ -181,28 +181,28 @@ ARG IMAGE_REVISION
 ARG IMAGE_CREATED
 ARG IMAGE_LICENSES
 
-LABEL org.opencontainers.image.title="${IMAGE_TITLE}" \
-      org.opencontainers.image.description="${IMAGE_DESCRIPTION}" \
-      org.opencontainers.image.authors="${IMAGE_AUTHORS}" \
-      org.opencontainers.image.vendor="${IMAGE_VENDOR}" \
-      org.opencontainers.image.source="${IMAGE_SOURCE}" \
-      org.opencontainers.image.url="${IMAGE_URL}" \
-      org.opencontainers.image.documentation="${IMAGE_DOCUMENTATION}" \
-      org.opencontainers.image.revision="${IMAGE_REVISION}" \
-      org.opencontainers.image.created="${IMAGE_CREATED}" \
-      org.opencontainers.image.licenses="${IMAGE_LICENSES}" \
-      org.opencontainers.image.base.name="${BASE}" \
-      org.opencontainers.image.version="${PG_VERSION}" \
-      org.opencontainers.image.ref.name="${IMAGE_REPOSITORY}" \
-      org.opencontainers.image.component.postgresql.version="${PG_VERSION}" \
-      org.opencontainers.image.component.pg_cron.version="${PG_CRON_VERSION}" \
-      org.opencontainers.image.component.pg_cron.revision="${PG_CRON_COMMIT}" \
-      org.opencontainers.image.component.pgvector.version="${PGVECTOR_VERSION}" \
-      org.opencontainers.image.component.pgvector.revision="${PGVECTOR_COMMIT}" \
-      org.opencontainers.image.component.pgaudit.version="${PGAUDIT_VERSION}" \
-      org.opencontainers.image.component.pgaudit.revision="${PGAUDIT_COMMIT}" \
-      edu.gatech.image.owner="${IMAGE_OWNER}" \
-      edu.gatech.image.repository="${IMAGE_REPOSITORY}"
+LABEL org.opencontainers.image.created="${IMAGE_CREATED}"
+LABEL org.opencontainers.image.base.name="${BASE}"
+LABEL org.opencontainers.image.authors="${IMAGE_AUTHORS}"
+LABEL org.opencontainers.image.title="${IMAGE_TITLE}"
+LABEL org.opencontainers.image.description="${IMAGE_DESCRIPTION}"
+LABEL org.opencontainers.image.vendor="${IMAGE_VENDOR}"
+LABEL org.opencontainers.image.source="${IMAGE_SOURCE}"
+LABEL org.opencontainers.image.url="${IMAGE_URL}"
+LABEL org.opencontainers.image.documentation="${IMAGE_DOCUMENTATION}"
+LABEL org.opencontainers.image.version="${PG_VERSION}"
+LABEL org.opencontainers.image.revision="${IMAGE_REVISION}"
+LABEL org.opencontainers.image.licenses="${IMAGE_LICENSES}"
+LABEL org.opencontainers.image.ref.name="${IMAGE_REPOSITORY}"
+LABEL org.opencontainers.image.component.postgresql.version="${PG_VERSION}"
+LABEL org.opencontainers.image.component.pg_cron.version="${PG_CRON_VERSION}"
+LABEL org.opencontainers.image.component.pg_cron.revision="${PG_CRON_COMMIT}"
+LABEL org.opencontainers.image.component.pgvector.version="${PGVECTOR_VERSION}"
+LABEL org.opencontainers.image.component.pgvector.revision="${PGVECTOR_COMMIT}"
+LABEL org.opencontainers.image.component.pgaudit.version="${PGAUDIT_VERSION}"
+LABEL org.opencontainers.image.component.pgaudit.revision="${PGAUDIT_COMMIT}"
+LABEL edu.gatech.image.owner="${IMAGE_OWNER}"
+LABEL edu.gatech.image.repository="${IMAGE_REPOSITORY}"
 
 USER root
 # Top line of installs is vuln prevention
