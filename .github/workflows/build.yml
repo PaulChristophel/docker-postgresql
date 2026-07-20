@@ -7,7 +7,10 @@ on:
   workflow_dispatch:
 
 permissions:
+  attestations: write
   contents: read
+  id-token: write
+  packages: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -51,12 +54,14 @@ jobs:
         run: echo "created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
 
       - name: Build and push image
+        id: push
         uses: docker/build-push-action@v7
         with:
           context: .
           file: photon.dockerfile
           platforms: linux/amd64
           push: true
+          provenance: false
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           build-args: |
@@ -65,3 +70,10 @@ jobs:
             IMAGE_CREATED=${{ steps.build.outputs.created }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Generate provenance attestation
+        uses: actions/attest@v4
+        with:
+          subject-name: index.docker.io/pcm0/postgres
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
