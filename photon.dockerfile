@@ -26,6 +26,7 @@ RUN build_packages="\
       binutils \
       clang \
       clang-devel \
+      diffutils \
       flex \
       gawk \
       gcc \

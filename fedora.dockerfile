@@ -27,6 +27,7 @@ RUN build_packages="\
       bsdtar \
       clang \
       clang-devel \
+      diffutils \
       flex \
       gawk \
       gcc \
@@ -217,17 +218,17 @@ USER root
 RUN runtime_packages="\
       sqlite-libs libssh2 \
       icu \
-      krb5 \
-      Linux-PAM \
+      krb5-libs \
+      pam \
       libxml2 \
       libxslt \
-      libllvm \
-      lz4 \
+      llvm-libs \
+      lz4-libs \
       openldap \
-      openssl \
+      openssl-libs \
       readline \
-      shadow \
-      zlib \
+      shadow-utils \
+      zlib-ng-compat \
       zstd" \
  && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
       runtime_packages="${runtime_packages} perl python3 tcl"; \
