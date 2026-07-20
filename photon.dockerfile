@@ -42,6 +42,7 @@ RUN build_packages="\
       openldap-devel \
       openssl-devel \
       Linux-PAM-devel \
+      perl \
       readline-devel \
       tar \
       wget \
@@ -49,7 +50,7 @@ RUN build_packages="\
       zlib-devel \
       zstd-devel" \
  && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
-      build_packages="${build_packages} perl python3-devel tcl-devel"; \
+      build_packages="${build_packages} python3-devel tcl-devel"; \
     fi \
  && tdnf install -y ${build_packages} \
  && wget -O /tmp/postgresql.tar.bz2 https://ftp.postgresql.org/pub/source/v${PG_VERSION}/postgresql-${PG_VERSION}.tar.bz2 \
