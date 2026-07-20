@@ -17,6 +17,7 @@ FROM $BASE AS postgres-builder
 ARG PG_MAJOR=18
 ARG PG_VERSION=18.4
 ARG PG_SHA256=81a81ec695fb0c7901407defaa1d2f7973617154cf27ba74e3a7ab8e64436094
+ARG PG_CFLAGS="-O2 -pipe"
 
 USER root
 RUN tdnf install -y \
@@ -53,11 +54,21 @@ RUN tdnf install -y \
  && echo "${PG_SHA256}  /tmp/postgresql.tar.bz2" | sha256sum -c - \
  && mkdir -p /tmp/postgresql-src \
  && tar -xjf /tmp/postgresql.tar.bz2 -C /tmp/postgresql-src --strip-components=1 \
- && cd /tmp/postgresql-src \
  && PERL_CORE="$(perl -MConfig -e 'print "$Config{archlibexp}/CORE"')" \
  && mkdir -p /usr/local/include \
  && cp "${PERL_CORE}"/*.h /usr/local/include/ \
- && ./configure \
+ && groupadd -r postgres-build \
+ && useradd -r -g postgres-build -d /tmp/postgres-build postgres-build \
+ && mkdir -p /tmp/postgres-build /tmp/postgres-install \
+ && chown -R postgres-build:postgres-build \
+      /tmp/postgresql-src \
+      /tmp/postgres-build \
+      /tmp/postgres-install
+
+USER postgres-build
+WORKDIR /tmp/postgresql-src
+RUN ./configure \
+      CFLAGS="${PG_CFLAGS}" \
       --prefix=/usr/pgsql/${PG_MAJOR} \
       --with-gssapi \
       --with-icu \
@@ -66,23 +77,30 @@ RUN tdnf install -y \
       --with-libxslt \
       --with-llvm \
       --with-lz4 \
-      --with-openssl \
+      --with-ssl=openssl \
       --with-pam \
       --with-perl \
       --with-python \
       --with-tcl \
       --with-zstd \
  && make -j"$(nproc)" world-bin \
- && make install-world-bin
+ && make -j"$(nproc)" check \
+ && make install-world-bin DESTDIR=/tmp/postgres-install
 
 
 FROM $BASE AS extension-builder
 ARG PG_MAJOR=18
 ARG PG_CRON_VERSION=1.6.7
+ARG PG_CRON_COMMIT=465b38c737f584d520229f5a1d69d1d44649e4e5
+ARG PG_CRON_SOURCE_SHA256=ab41d388d845c05ab6f34fa8e12011da2d71f7f562194ee105a6fdecb506a70f
 ARG PGVECTOR_VERSION=0.8.5
+ARG PGVECTOR_COMMIT=159b79aaad5983fb7459c1e3df2897fbb2d11788
+ARG PGVECTOR_SOURCE_SHA256=9a483fad70ae2e0a50b3dccb6c4b4931d9a07375a1d5815e82b57870448a7d52
 ARG PGAUDIT_VERSION=18.0
+ARG PGAUDIT_COMMIT=f39f8dbb15dc5bd4cbe5f1e5abe0d930ed7593a8
+ARG PGAUDIT_SOURCE_SHA256=bbfc57be090c82b4efd8f8ed7f613e2d8537c38c35f25bb2d1c005d5747ef2e4
 
-COPY --from=postgres-builder /usr/pgsql/${PG_MAJOR} /usr/pgsql/${PG_MAJOR}
+COPY --from=postgres-builder /tmp/postgres-install/usr/pgsql/${PG_MAJOR} /usr/pgsql/${PG_MAJOR}
 
 USER root
 RUN tdnf install -y \
@@ -91,7 +109,6 @@ RUN tdnf install -y \
       clang-devel \
       gcc \
       glibc-devel \
-      git \
       icu-devel \
       krb5-devel \
       libxml2-devel \
@@ -105,13 +122,24 @@ RUN tdnf install -y \
       Linux-PAM-devel \
       zlib-devel \
       zstd-devel \
- && git clone --depth 1 --branch v${PG_CRON_VERSION} https://github.com/citusdata/pg_cron.git /tmp/pg_cron \
+      tar \
+      wget \
+ && wget -O /tmp/pg_cron.tar.gz https://github.com/citusdata/pg_cron/archive/${PG_CRON_COMMIT}.tar.gz \
+ && echo "${PG_CRON_SOURCE_SHA256}  /tmp/pg_cron.tar.gz" | sha256sum -c - \
+ && mkdir /tmp/pg_cron \
+ && tar -xzf /tmp/pg_cron.tar.gz -C /tmp/pg_cron --strip-components=1 \
  && PATH=/usr/pgsql/${PG_MAJOR}/bin:$PATH make -C /tmp/pg_cron \
  && PATH=/usr/pgsql/${PG_MAJOR}/bin:$PATH make -C /tmp/pg_cron install \
- && git clone --depth 1 --branch v${PGVECTOR_VERSION} https://github.com/pgvector/pgvector.git /tmp/pgvector \
- && PATH=/usr/pgsql/${PG_MAJOR}/bin:$PATH make -C /tmp/pgvector \
- && PATH=/usr/pgsql/${PG_MAJOR}/bin:$PATH make -C /tmp/pgvector install \
- && git clone --depth 1 --branch ${PGAUDIT_VERSION} https://github.com/pgaudit/pgaudit.git /tmp/pgaudit \
+ && wget -O /tmp/pgvector.tar.gz https://github.com/pgvector/pgvector/archive/${PGVECTOR_COMMIT}.tar.gz \
+ && echo "${PGVECTOR_SOURCE_SHA256}  /tmp/pgvector.tar.gz" | sha256sum -c - \
+ && mkdir /tmp/pgvector \
+ && tar -xzf /tmp/pgvector.tar.gz -C /tmp/pgvector --strip-components=1 \
+ && PATH=/usr/pgsql/${PG_MAJOR}/bin:$PATH make -C /tmp/pgvector OPTFLAGS="" \
+ && PATH=/usr/pgsql/${PG_MAJOR}/bin:$PATH make -C /tmp/pgvector OPTFLAGS="" install \
+ && wget -O /tmp/pgaudit.tar.gz https://github.com/pgaudit/pgaudit/archive/${PGAUDIT_COMMIT}.tar.gz \
+ && echo "${PGAUDIT_SOURCE_SHA256}  /tmp/pgaudit.tar.gz" | sha256sum -c - \
+ && mkdir /tmp/pgaudit \
+ && tar -xzf /tmp/pgaudit.tar.gz -C /tmp/pgaudit --strip-components=1 \
  && PATH=/usr/pgsql/${PG_MAJOR}/bin:$PATH make -C /tmp/pgaudit USE_PGXS=1 \
  && PATH=/usr/pgsql/${PG_MAJOR}/bin:$PATH make -C /tmp/pgaudit USE_PGXS=1 install \
  && mkdir -p \
@@ -190,13 +218,34 @@ RUN tdnf install -y \
       tcl \
       zlib \
       zstd \
+ && tdnf clean all \
+ && rm -rf /var/cache/tdnf \
  && groupadd -g 26 postgres \
  && useradd -u 26 -g 26 -d /var/lib/pgsql -s /bin/bash postgres \
  && mkdir -p /var/lib/pgsql \
  && chown -R postgres:postgres /var/lib/pgsql
 
-COPY --from=postgres-builder /usr/pgsql/${PG_MAJOR} /usr/pgsql/${PG_MAJOR}
+COPY --from=postgres-builder /tmp/postgres-install/usr/pgsql/${PG_MAJOR} /usr/pgsql/${PG_MAJOR}
 COPY --from=extension-builder /tmp/extension-artifacts/ /
-RUN chown -R postgres:postgres /usr/pgsql/${PG_MAJOR} /var/lib/pgsql
+RUN chmod -R a-w /usr/pgsql/${PG_MAJOR}
 ENV PATH=/usr/pgsql/${PG_MAJOR}/bin:$PATH
 USER postgres
+RUN postgres --version \
+ && pg_config --cc \
+ && pg_config --cflags \
+ && pg_config --configure \
+ && mkdir /tmp/pg-smoke-socket \
+ && initdb -D /tmp/pg-smoke-data \
+ && pg_ctl -D /tmp/pg-smoke-data \
+      -o "-c listen_addresses='' -c unix_socket_directories=/tmp/pg-smoke-socket -c shared_preload_libraries=pg_cron,pgaudit -c cron.database_name=postgres" \
+      -w start \
+ && psql -h /tmp/pg-smoke-socket -d postgres -v ON_ERROR_STOP=1 \
+      -c 'CREATE EXTENSION vector' \
+      -c 'CREATE EXTENSION pg_cron' \
+      -c 'CREATE EXTENSION pgaudit' \
+      -c 'CREATE EXTENSION plperl' \
+      -c 'CREATE EXTENSION plpython3u' \
+      -c 'CREATE EXTENSION pltcl' \
+      -c 'SELECT extname, extversion FROM pg_extension ORDER BY extname' \
+ && pg_ctl -D /tmp/pg-smoke-data -m fast -w stop \
+ && rm -rf /tmp/pg-smoke-data /tmp/pg-smoke-socket
