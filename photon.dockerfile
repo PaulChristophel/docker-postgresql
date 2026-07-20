@@ -84,7 +84,7 @@ RUN ./configure \
       --with-tcl \
       --with-zstd \
  && make -j"$(nproc)" world-bin \
- && make -j"$(nproc)" check \
+ && make -j"$(nproc)" check-world \
  && make install-world-bin DESTDIR=/tmp/postgres-install
 
 
@@ -163,8 +163,11 @@ ARG BASE
 ARG PG_MAJOR=18
 ARG PG_VERSION=18.4
 ARG PG_CRON_VERSION=1.6.7
+ARG PG_CRON_COMMIT=465b38c737f584d520229f5a1d69d1d44649e4e5
 ARG PGVECTOR_VERSION=0.8.5
+ARG PGVECTOR_COMMIT=159b79aaad5983fb7459c1e3df2897fbb2d11788
 ARG PGAUDIT_VERSION=18.0
+ARG PGAUDIT_COMMIT=f39f8dbb15dc5bd4cbe5f1e5abe0d930ed7593a8
 ARG IMAGE_TITLE
 ARG IMAGE_DESCRIPTION
 ARG IMAGE_AUTHORS
@@ -193,8 +196,11 @@ LABEL org.opencontainers.image.title="${IMAGE_TITLE}" \
       org.opencontainers.image.ref.name="${IMAGE_REPOSITORY}" \
       org.opencontainers.image.component.postgresql.version="${PG_VERSION}" \
       org.opencontainers.image.component.pg_cron.version="${PG_CRON_VERSION}" \
+      org.opencontainers.image.component.pg_cron.revision="${PG_CRON_COMMIT}" \
       org.opencontainers.image.component.pgvector.version="${PGVECTOR_VERSION}" \
+      org.opencontainers.image.component.pgvector.revision="${PGVECTOR_COMMIT}" \
       org.opencontainers.image.component.pgaudit.version="${PGAUDIT_VERSION}" \
+      org.opencontainers.image.component.pgaudit.revision="${PGAUDIT_COMMIT}" \
       edu.gatech.image.owner="${IMAGE_OWNER}" \
       edu.gatech.image.repository="${IMAGE_REPOSITORY}"
 
@@ -227,7 +233,8 @@ RUN tdnf install -y \
 
 COPY --from=postgres-builder /tmp/postgres-install/usr/pgsql/${PG_MAJOR} /usr/pgsql/${PG_MAJOR}
 COPY --from=extension-builder /tmp/extension-artifacts/ /
-RUN chmod -R a-w /usr/pgsql/${PG_MAJOR}
+RUN chown -R root:root /usr/pgsql/${PG_MAJOR} \
+ && chmod -R a-w /usr/pgsql/${PG_MAJOR}
 ENV PATH=/usr/pgsql/${PG_MAJOR}/bin:$PATH
 USER postgres
 RUN postgres --version \

@@ -58,6 +58,26 @@ podman build \
     --build-arg IMAGE_REVISION="${IMAGE_REVISION}" \
     --build-arg IMAGE_CREATED="${IMAGE_CREATED}" \
     --build-arg IMAGE_LICENSES="${IMAGE_LICENSES}" \
+    --annotation "org.opencontainers.image.title=${IMAGE_TITLE}" \
+    --annotation "org.opencontainers.image.description=${IMAGE_DESCRIPTION}" \
+    --annotation "org.opencontainers.image.authors=${IMAGE_AUTHORS}" \
+    --annotation "org.opencontainers.image.vendor=${IMAGE_VENDOR}" \
+    --annotation "org.opencontainers.image.source=${IMAGE_SOURCE}" \
+    --annotation "org.opencontainers.image.url=${IMAGE_URL}" \
+    --annotation "org.opencontainers.image.documentation=${IMAGE_DOCUMENTATION}" \
+    --annotation "org.opencontainers.image.revision=${IMAGE_REVISION}" \
+    --annotation "org.opencontainers.image.created=${IMAGE_CREATED}" \
+    --annotation "org.opencontainers.image.licenses=${IMAGE_LICENSES}" \
+    --annotation "org.opencontainers.image.base.name=${BASE}" \
+    --annotation "org.opencontainers.image.version=${PG_VERSION}" \
+    --annotation "org.opencontainers.image.ref.name=${IMAGE_REPOSITORY}:${TAG}" \
+    --annotation "org.opencontainers.image.component.postgresql.version=${PG_VERSION}" \
+    --annotation "org.opencontainers.image.component.pg_cron.version=${PG_CRON_VERSION}" \
+    --annotation "org.opencontainers.image.component.pg_cron.revision=${PG_CRON_COMMIT}" \
+    --annotation "org.opencontainers.image.component.pgvector.version=${PGVECTOR_VERSION}" \
+    --annotation "org.opencontainers.image.component.pgvector.revision=${PGVECTOR_COMMIT}" \
+    --annotation "org.opencontainers.image.component.pgaudit.version=${PGAUDIT_VERSION}" \
+    --annotation "org.opencontainers.image.component.pgaudit.revision=${PGAUDIT_COMMIT}" \
     --platform=linux/amd64 \
     -f photon.dockerfile \
     -t "${IMAGE_REPOSITORY}:${TAG}"
