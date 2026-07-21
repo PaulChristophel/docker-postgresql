@@ -1,0 +1,182 @@
+name: Build, publish, and catalog PostgreSQL images
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "*.dockerfile"
+      - "images.json"
+      - "scripts/generate_catalogs.py"
+      - ".github/workflows/release.yml"
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  attestations: write
+  contents: read
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prepare:
+    name: Load build matrix
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.matrix.outputs.image }}
+      postgresql: ${{ steps.matrix.outputs.postgresql }}
+      variants: ${{ steps.matrix.outputs.variants }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Read image configuration
+        id: matrix
+        run: |
+          echo "image=$(jq -r '.image' images.json)" >> "$GITHUB_OUTPUT"
+          echo "postgresql=$(jq -c '.defaults as $defaults | [.postgresql[] | . + {pg_cron_commit: (.pg_cron_commit // $defaults.pg_cron_commit), pg_cron_sha256: (.pg_cron_sha256 // $defaults.pg_cron_sha256)}]' images.json)" >> "$GITHUB_OUTPUT"
+          echo "variants=$(jq -c '.variants' images.json)" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: PostgreSQL ${{ matrix.postgresql.major }} ${{ matrix.variant.tag }}
+    needs: prepare
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ${{ needs.prepare.outputs.image }}
+    strategy:
+      fail-fast: false
+      matrix:
+        postgresql: ${{ fromJSON(needs.prepare.outputs.postgresql) }}
+        variant: ${{ fromJSON(needs.prepare.outputs.variants) }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          registry: docker.io
+          username: pcm0
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Generate image metadata
+        id: metadata
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=${{ matrix.postgresql.version }}-${{ matrix.variant.tag }}
+            type=raw,value=${{ matrix.postgresql.major }}-${{ matrix.variant.tag }}
+            type=raw,value=latest,enable=${{ matrix.postgresql.major == 18 && matrix.variant.tag == 'standard-photon5' }}
+            type=sha,prefix=${{ matrix.postgresql.major }}-${{ matrix.variant.tag }}-sha-
+
+      - name: Record build timestamp
+        id: build-time
+        run: echo "created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+
+      - name: Build and push image
+        id: push
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ${{ matrix.variant.dockerfile }}
+          platforms: linux/amd64
+          push: true
+          provenance: false
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+          build-args: |
+            PG_MAJOR=${{ matrix.postgresql.major }}
+            PG_VERSION=${{ matrix.postgresql.version }}
+            PG_SHA256=${{ matrix.postgresql.sha256 }}
+            WITH_UNTRUSTED_LANGUAGES=${{ matrix.variant.untrusted }}
+            PG_CRON_COMMIT=${{ matrix.postgresql.pg_cron_commit }}
+            PG_CRON_SOURCE_SHA256=${{ matrix.postgresql.pg_cron_sha256 }}
+            PGAUDIT_VERSION=${{ matrix.postgresql.pgaudit_version }}
+            PGAUDIT_COMMIT=${{ matrix.postgresql.pgaudit_commit }}
+            PGAUDIT_SOURCE_SHA256=${{ matrix.postgresql.pgaudit_sha256 }}
+            IMAGE_REPOSITORY=${{ env.IMAGE_NAME }}
+            IMAGE_REVISION=${{ github.sha }}
+            IMAGE_CREATED=${{ steps.build-time.outputs.created }}
+          cache-from: type=gha,scope=postgres-${{ matrix.postgresql.major }}-${{ matrix.variant.tag }}
+          cache-to: type=gha,mode=max,scope=postgres-${{ matrix.postgresql.major }}-${{ matrix.variant.tag }}
+
+      - name: Generate provenance attestation
+        uses: actions/attest@v4
+        with:
+          subject-name: index.docker.io/pcm0/postgres
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
+
+      - name: Record published digest
+        env:
+          DIGEST: ${{ steps.push.outputs.digest }}
+          IMAGE: ${{ env.IMAGE_NAME }}
+          MAJOR: ${{ matrix.postgresql.major }}
+          VARIANT: ${{ matrix.variant.tag }}
+        run: |
+          mkdir -p results
+          jq -n \
+            --argjson major "$MAJOR" \
+            --arg variant "$VARIANT" \
+            --arg image "$IMAGE" \
+            --arg digest "$DIGEST" \
+            '{major: $major, variant: $variant, image: $image, digest: $digest}' \
+            > "results/${MAJOR}-${VARIANT}.json"
+
+      - name: Upload digest result
+        uses: actions/upload-artifact@v7
+        with:
+          name: digest-${{ matrix.postgresql.major }}-${{ matrix.variant.tag }}
+          path: results/*.json
+          if-no-files-found: error
+
+  catalogs:
+    name: Generate image catalogs
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Download digest results
+        uses: actions/download-artifact@v8
+        with:
+          pattern: digest-*
+          path: results
+          merge-multiple: true
+
+      - name: Generate ClusterImageCatalog manifests
+        run: |
+          python3 scripts/generate_catalogs.py \
+            --results results \
+            --output image-catalogs
+
+      - name: Upload generated catalogs
+        uses: actions/upload-artifact@v7
+        with:
+          name: cluster-image-catalogs
+          path: image-catalogs/*.yaml
+          if-no-files-found: error
+
+      - name: Create catalog update pull request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: image-catalogs/*.yaml
+          branch: automation/update-image-catalogs
+          commit-message: Update PostgreSQL image catalogs
+          title: Update PostgreSQL image catalogs
+          body: |
+            Updates the CloudNativePG image catalogs with the immutable digests
+            produced by the latest successful image release workflow.
+          delete-branch: true

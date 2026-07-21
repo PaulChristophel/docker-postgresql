@@ -1,0 +1,103 @@
+{
+  "image": "docker.io/pcm0/postgres",
+  "defaults": {
+    "pg_cron_commit": "465b38c737f584d520229f5a1d69d1d44649e4e5",
+    "pg_cron_sha256": "ab41d388d845c05ab6f34fa8e12011da2d71f7f562194ee105a6fdecb506a70f"
+  },
+  "postgresql": [
+    {
+      "major": 14,
+      "version": "14.23",
+      "sha256": "cc7216822b546330e29c2f91e123c8734a4c41795082145bb962aa712e8c94a5",
+      "pgaudit_version": "1.6.3",
+      "pgaudit_commit": "abdb653a57228c28c52600aefa4852616eb6b0af",
+      "pgaudit_sha256": "cef4a1424fafd373f20e5d89bc8b20c904b9fc875ddbf805bb2896d716643b65",
+      "channel": "stable"
+    },
+    {
+      "major": 15,
+      "version": "15.18",
+      "sha256": "11df0df97fe3ea4ba9a791faaf39cee1d2fe571e78885b5b55d8517d27c323b4",
+      "pgaudit_version": "1.7.1",
+      "pgaudit_commit": "72da89c3fa02f3f2b9f3933214d91ad9c3428467",
+      "pgaudit_sha256": "3a27de4da689463ec92a2cc2edaf9d0a8e45fb814bb6d8fa277442d1284d2ba1",
+      "channel": "stable"
+    },
+    {
+      "major": 16,
+      "version": "16.14",
+      "sha256": "f6d077142737920858ce958ccdb75c6ee137a63b5b0853c70693d401ac7e3471",
+      "pgaudit_version": "16.1",
+      "pgaudit_commit": "a81792e8a4ea8f7aaf75bd610fcc4c2f96650bdc",
+      "pgaudit_sha256": "92e9c932ee0b07cbd041187bed04faae23769b80a0bca89800fcaddbf7131153",
+      "channel": "stable"
+    },
+    {
+      "major": 17,
+      "version": "17.10",
+      "sha256": "078a03516dcdbdb705fecaf415ea3d13a956c589e46f09fed68a06fb00598c90",
+      "pgaudit_version": "17.1",
+      "pgaudit_commit": "266ada37842d9c6d7a0623065cbfe915f2572f74",
+      "pgaudit_sha256": "3c5f72bd54f7a7e1c82a4fd1fdb75cc2cdf61eba4913a579f69071eb42c49331",
+      "channel": "stable"
+    },
+    {
+      "major": 18,
+      "version": "18.4",
+      "sha256": "81a81ec695fb0c7901407defaa1d2f7973617154cf27ba74e3a7ab8e64436094",
+      "pgaudit_version": "18.0",
+      "pgaudit_commit": "f39f8dbb15dc5bd4cbe5f1e5abe0d930ed7593a8",
+      "pgaudit_sha256": "bbfc57be090c82b4efd8f8ed7f613e2d8537c38c35f25bb2d1c005d5747ef2e4",
+      "channel": "stable"
+    },
+    {
+      "major": 19,
+      "version": "19beta2",
+      "sha256": "f1fb4373f4b0f4db896964f3e5b01658ff0acebd595da7558436ccf0d63b82b2",
+      "pg_cron_commit": "c7609cce5c9f5fd8bcbab536cef08803a38bf6c1",
+      "pg_cron_sha256": "f566a711199227715f871eebd21abea744bf9510d041ede7e86c1916bbaa8826",
+      "pgaudit_version": "19.0",
+      "pgaudit_commit": "3104214bad06516608eb851eb8f9d4e1b85b0cc4",
+      "pgaudit_sha256": "5980385c472bcf0c1fdf719c79dd56190837c5f77af07ca19638889823e79ffd",
+      "channel": "preview"
+    }
+  ],
+  "variants": [
+    {
+      "dockerfile": "photon.dockerfile",
+      "tag": "standard-photon5",
+      "os": "photon5",
+      "untrusted": false
+    },
+    {
+      "dockerfile": "photon.dockerfile",
+      "tag": "standard-photon5-untrusted",
+      "os": "photon5",
+      "untrusted": true
+    },
+    {
+      "dockerfile": "fedora.dockerfile",
+      "tag": "standard-fedora44",
+      "os": "fedora44",
+      "untrusted": false
+    },
+    {
+      "dockerfile": "fedora.dockerfile",
+      "tag": "standard-fedora44-untrusted",
+      "os": "fedora44",
+      "untrusted": true
+    },
+    {
+      "dockerfile": "rockylinux.dockerfile",
+      "tag": "standard-rocky10",
+      "os": "rocky10",
+      "untrusted": false
+    },
+    {
+      "dockerfile": "rockylinux.dockerfile",
+      "tag": "standard-rocky10-untrusted",
+      "os": "rocky10",
+      "untrusted": true
+    }
+  ]
+}
