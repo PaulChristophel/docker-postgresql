@@ -17,8 +17,8 @@ FROM $BASE AS postgres-builder
 ARG PG_MAJOR=18
 ARG PG_VERSION=18.4
 ARG PG_SHA256=81a81ec695fb0c7901407defaa1d2f7973617154cf27ba74e3a7ab8e64436094
-ARG PG_CFLAGS="-O2 -pipe -fstack-protector-strong -D_FORTIFY_SOURCE=3"
-ARG PG_LDFLAGS="-Wl,-z,relro,-z,now -Wl,--as-needed"
+ARG POSTGRES_CFLAGS="-O2 -pipe -fstack-protector-strong -D_FORTIFY_SOURCE=3"
+ARG POSTGRES_LDFLAGS="-Wl,-z,relro,-z,now -Wl,--as-needed"
 ARG WITH_UNTRUSTED_LANGUAGES=false
 
 USER root
@@ -88,8 +88,8 @@ RUN configure_untrusted="" \
       configure_modern="--with-libcurl"; \
     fi \
  && ./configure \
-      CFLAGS="${PG_CFLAGS}" \
-      LDFLAGS="${PG_LDFLAGS}" \
+      CFLAGS="${POSTGRES_CFLAGS}" \
+      LDFLAGS="${POSTGRES_LDFLAGS}" \
       --prefix=/usr/pgsql/${PG_MAJOR} \
       --with-gssapi \
       --with-icu \
