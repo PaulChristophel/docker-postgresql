@@ -35,40 +35,34 @@ jobs:
         include:
           - variant: photon
             dockerfile: photon.dockerfile
-            tag_variant: photon
+            tag_variant: standard-photon5
             untrusted: false
             latest: false
-            sha_prefix: 14-photon-standard-sha-
           - variant: photon
             dockerfile: photon.dockerfile
-            tag_variant: photon-untrusted
+            tag_variant: standard-photon5-untrusted
             untrusted: true
             latest: false
-            sha_prefix: 14-photon-untrusted-sha-
           - variant: fedora
             dockerfile: fedora.dockerfile
-            tag_variant: fedora
+            tag_variant: standard-fedora44
             untrusted: false
             latest: false
-            sha_prefix: 14-fedora-standard-sha-
           - variant: fedora
             dockerfile: fedora.dockerfile
-            tag_variant: fedora-untrusted
+            tag_variant: standard-fedora44-untrusted
             untrusted: true
             latest: false
-            sha_prefix: 14-fedora-untrusted-sha-
           - variant: rockylinux
             dockerfile: rockylinux.dockerfile
-            tag_variant: rockylinux
+            tag_variant: standard-rocky10
             untrusted: false
             latest: false
-            sha_prefix: 14-rockylinux-standard-sha-
           - variant: rockylinux
             dockerfile: rockylinux.dockerfile
-            tag_variant: rockylinux-untrusted
+            tag_variant: standard-rocky10-untrusted
             untrusted: true
             latest: false
-            sha_prefix: 14-rockylinux-untrusted-sha-
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -92,7 +86,7 @@ jobs:
             type=raw,value=${{ env.PG_VERSION }}-${{ matrix.tag_variant }}
             type=raw,value=${{ env.PG_MAJOR }}-${{ matrix.tag_variant }}
             type=raw,value=latest,enable=${{ matrix.latest }}
-            type=sha,prefix=${{ matrix.sha_prefix }}
+            type=sha,prefix=${{ env.PG_MAJOR }}-${{ matrix.tag_variant }}-sha-
 
       - name: Record build timestamp
         id: build
