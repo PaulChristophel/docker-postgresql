@@ -17,7 +17,8 @@ FROM $BASE AS postgres-builder
 ARG PG_MAJOR=18
 ARG PG_VERSION=18.4
 ARG PG_SHA256=81a81ec695fb0c7901407defaa1d2f7973617154cf27ba74e3a7ab8e64436094
-ARG PG_CFLAGS="-O2 -pipe"
+ARG PG_CFLAGS="-O2 -pipe -fstack-protector-strong -D_FORTIFY_SOURCE=3"
+ARG PG_LDFLAGS="-Wl,-z,relro,-z,now -Wl,--as-needed"
 ARG WITH_UNTRUSTED_LANGUAGES=false
 
 USER root
@@ -47,12 +48,16 @@ RUN build_packages="\
       pam-devel \
       perl \
       readline-devel \
+      tzdata \
       wget \
       xz \
       zlib-devel \
       libzstd-devel" \
  && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
       build_packages="${build_packages} python3-devel tcl-devel"; \
+    fi \
+ && if [ "${PG_MAJOR}" -ge 18 ]; then \
+      build_packages="${build_packages} libcurl-devel liburing-devel"; \
     fi \
  && dnf install -y ${build_packages} \
  && wget -O /tmp/postgresql.tar.bz2 https://ftp.postgresql.org/pub/source/v${PG_VERSION}/postgresql-${PG_VERSION}.tar.bz2 \
@@ -75,11 +80,16 @@ RUN build_packages="\
 USER postgres-build
 WORKDIR /tmp/postgresql-src
 RUN configure_untrusted="" \
+ && configure_modern="" \
  && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
       configure_untrusted="--with-perl --with-python --with-tcl"; \
     fi \
+ && if [ "${PG_MAJOR}" -ge 18 ]; then \
+      configure_modern="--with-libcurl --with-liburing"; \
+    fi \
  && ./configure \
       CFLAGS="${PG_CFLAGS}" \
+      LDFLAGS="${PG_LDFLAGS}" \
       --prefix=/usr/pgsql/${PG_MAJOR} \
       --with-gssapi \
       --with-icu \
@@ -92,6 +102,8 @@ RUN configure_untrusted="" \
       --with-pam \
       --with-uuid=e2fs \
       --with-zstd \
+      --with-system-tzdata=/usr/share/zoneinfo \
+      ${configure_modern} \
       ${configure_untrusted} \
  && make -j"$(nproc)" world-bin \
  && make -j"$(nproc)" check-world \
@@ -231,10 +243,14 @@ RUN runtime_packages="\
       openssl-libs \
       readline \
       shadow-utils \
+      tzdata \
       zlib-ng-compat \
       zstd" \
  && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
       runtime_packages="${runtime_packages} perl python3 tcl"; \
+    fi \
+ && if [ "${PG_MAJOR}" -ge 18 ]; then \
+      runtime_packages="${runtime_packages} libcurl-minimal liburing"; \
     fi \
  && dnf install -y ${runtime_packages} \
  && dnf clean all \
@@ -265,6 +281,12 @@ RUN postgres --version \
  && pg_config --cc \
  && pg_config --cflags \
  && pg_config --configure \
+ && test -e /usr/share/zoneinfo/UTC \
+ && if [ "${PG_MAJOR}" -ge 18 ]; then \
+      pg_config --configure | grep -q -- '--with-libcurl'; \
+      pg_config --configure | grep -q -- '--with-liburing'; \
+      set -- /usr/pgsql/${PG_MAJOR}/lib/libpq-oauth*; test -e "$1"; \
+    fi \
  && mkdir /tmp/pg-smoke-socket \
  && initdb -D /tmp/pg-smoke-data \
  && pg_ctl -D /tmp/pg-smoke-data \

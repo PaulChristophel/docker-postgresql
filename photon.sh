@@ -8,7 +8,8 @@ BASE=docker.io/photon:5.0@sha256:6db86de5ffc11d5c55e59d23790ad526b68e5bca4f030cb
 PG_MAJOR=18
 PG_VERSION=18.4
 PG_SHA256=81a81ec695fb0c7901407defaa1d2f7973617154cf27ba74e3a7ab8e64436094
-PG_CFLAGS="-O2 -pipe"
+PG_CFLAGS="-O2 -pipe -fstack-protector-strong -D_FORTIFY_SOURCE=3"
+PG_LDFLAGS="-Wl,-z,relro,-z,now -Wl,--as-needed"
 PG_CRON_VERSION=1.6.7
 PG_CRON_COMMIT=465b38c737f584d520229f5a1d69d1d44649e4e5
 PG_CRON_SOURCE_SHA256=ab41d388d845c05ab6f34fa8e12011da2d71f7f562194ee105a6fdecb506a70f
@@ -37,6 +38,7 @@ podman build \
     --build-arg PG_VERSION="${PG_VERSION}" \
     --build-arg PG_SHA256="${PG_SHA256}" \
     --build-arg PG_CFLAGS="${PG_CFLAGS}" \
+    --build-arg PG_LDFLAGS="${PG_LDFLAGS}" \
     --build-arg PG_CRON_VERSION="${PG_CRON_VERSION}" \
     --build-arg PG_CRON_COMMIT="${PG_CRON_COMMIT}" \
     --build-arg PG_CRON_SOURCE_SHA256="${PG_CRON_SOURCE_SHA256}" \
