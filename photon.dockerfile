@@ -46,6 +46,7 @@ RUN build_packages="\
       perl \
       readline-devel \
       tar \
+      util-linux-devel \
       wget \
       xz \
       zlib-devel \
@@ -89,6 +90,7 @@ RUN configure_untrusted="" \
       --with-lz4 \
       --with-ssl=openssl \
       --with-pam \
+      --with-uuid=e2fs \
       --with-zstd \
       ${configure_untrusted} \
  && make -j"$(nproc)" world-bin \
@@ -223,6 +225,7 @@ RUN runtime_packages="\
       libxml2 \
       libxslt \
       libllvm \
+      util-linux-libs \
       lz4 \
       openldap \
       openssl \
@@ -271,6 +274,7 @@ RUN postgres --version \
       -c 'CREATE EXTENSION vector' \
       -c 'CREATE EXTENSION pg_cron' \
       -c 'CREATE EXTENSION pgaudit' \
+      -c 'CREATE EXTENSION "uuid-ossp"' \
       -c 'SELECT extname, extversion FROM pg_extension ORDER BY extname' \
  && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
       psql -h /tmp/pg-smoke-socket -d postgres -v ON_ERROR_STOP=1 \
