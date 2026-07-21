@@ -1,0 +1,15 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ClusterImageCatalog
+metadata:
+  name: postgresql-standard-photon5-preview
+  labels:
+    images.cnpg.io/family: postgresql
+    images.cnpg.io/type: standard
+    images.cnpg.io/os: photon5
+    images.cnpg.io/date: "20260721"
+    images.cnpg.io/publisher: docker.io
+    images.cnpg.io/channel: preview
+spec:
+  images:
+    - major: 19
+      image: docker.io/pcm0/postgres@sha256:8e892e27f7f5184a7e6ce2b1ff40370aff393ecc7f44d54e5d1e12b24358c450

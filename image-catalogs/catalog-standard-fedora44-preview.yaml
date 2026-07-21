@@ -1,0 +1,15 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ClusterImageCatalog
+metadata:
+  name: postgresql-standard-fedora44-preview
+  labels:
+    images.cnpg.io/family: postgresql
+    images.cnpg.io/type: standard
+    images.cnpg.io/os: fedora44
+    images.cnpg.io/date: "20260721"
+    images.cnpg.io/publisher: docker.io
+    images.cnpg.io/channel: preview
+spec:
+  images:
+    - major: 19
+      image: docker.io/pcm0/postgres@sha256:f7a1e4c58d50214d826c057af51f6bb3dabf6a1722698d42c334601b2a2cce1c

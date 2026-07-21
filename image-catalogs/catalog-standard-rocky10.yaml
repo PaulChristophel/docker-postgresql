@@ -1,0 +1,22 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ClusterImageCatalog
+metadata:
+  name: postgresql-standard-rocky10
+  labels:
+    images.cnpg.io/family: postgresql
+    images.cnpg.io/type: standard
+    images.cnpg.io/os: rocky10
+    images.cnpg.io/date: "20260721"
+    images.cnpg.io/publisher: docker.io
+spec:
+  images:
+    - major: 14
+      image: docker.io/pcm0/postgres@sha256:6fea4fe23d87ce7c4c24148b03360ed543eb09a73b4cfba2cc139208ea911a0b
+    - major: 15
+      image: docker.io/pcm0/postgres@sha256:ad382a824548e40d0e9b16bdbdd0f4575bf06977d2ddf3b836014ef4eac3d107
+    - major: 16
+      image: docker.io/pcm0/postgres@sha256:0c126bd3330b7d243b47c013871359bae2a33885148610eb4781e67f6447ad5d
+    - major: 17
+      image: docker.io/pcm0/postgres@sha256:179b1d6e12d688cd7561c3731e20241d8b6df6d56dcdbcaa35c6dd0ccac33c2e
+    - major: 18
+      image: docker.io/pcm0/postgres@sha256:f211047204ac82d107bd38a987630d73d980f29304429e546c0a096b994ddc76
