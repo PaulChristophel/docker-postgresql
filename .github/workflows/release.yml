@@ -170,6 +170,7 @@ jobs:
           if-no-files-found: error
 
       - name: Create catalog update pull request
+        id: create-pr
         uses: peter-evans/create-pull-request@v8
         with:
           add-paths: image-catalogs/*.yaml
@@ -180,3 +181,17 @@ jobs:
             Updates the CloudNativePG image catalogs with the immutable digests
             produced by the latest successful image release workflow.
           delete-branch: true
+
+      - name: Approve and enable automatic merge
+        if: steps.create-pr.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ secrets.PR_APPROVER_TOKEN }}
+          PR_NUMBER: ${{ steps.create-pr.outputs.pull-request-number }}
+        run: |
+          gh pr review "$PR_NUMBER" \
+            --repo "$GITHUB_REPOSITORY" \
+            --approve
+          gh pr merge "$PR_NUMBER" \
+            --repo "$GITHUB_REPOSITORY" \
+            --squash \
+            --auto
