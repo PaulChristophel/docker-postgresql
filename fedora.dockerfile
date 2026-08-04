@@ -11,7 +11,7 @@ ARG IMAGE_URL="https://hub.docker.com/r/pcm0/postgres"
 ARG IMAGE_DOCUMENTATION="https://github.com/PaulChristophel/docker-postgresql#readme"
 ARG IMAGE_REVISION="unknown"
 ARG IMAGE_CREATED="1970-01-01T00:00:00Z"
-ARG IMAGE_LICENSES="PostgreSQL"
+ARG IMAGE_LICENSES="AGPL-3.0-or-later"
 
 FROM $BASE AS postgres-builder
 ARG PG_MAJOR=18

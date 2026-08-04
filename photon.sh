@@ -30,7 +30,7 @@ IMAGE_URL="https://hub.docker.com/r/pcm0/postgres"
 IMAGE_DOCUMENTATION="https://github.com/PaulChristophel/docker-postgresql#readme"
 IMAGE_REVISION="$(git rev-parse HEAD)"
 IMAGE_CREATED="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-IMAGE_LICENSES="PostgreSQL"
+IMAGE_LICENSES="AGPL-3.0-or-later"
 
 podman build \
     --build-arg BASE="${BASE}" \
