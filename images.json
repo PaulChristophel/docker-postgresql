@@ -52,13 +52,13 @@
     },
     {
       "major": 19,
-      "version": "19beta2",
-      "sha256": "f1fb4373f4b0f4db896964f3e5b01658ff0acebd595da7558436ccf0d63b82b2",
+      "version": "19beta3",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "pg_cron_commit": "c7609cce5c9f5fd8bcbab536cef08803a38bf6c1",
       "pg_cron_sha256": "f566a711199227715f871eebd21abea744bf9510d041ede7e86c1916bbaa8826",
       "pgaudit_version": "19.0",
-      "pgaudit_commit": "3104214bad06516608eb851eb8f9d4e1b85b0cc4",
-      "pgaudit_sha256": "5980385c472bcf0c1fdf719c79dd56190837c5f77af07ca19638889823e79ffd",
+      "pgaudit_commit": "52a32536711514467d0481f42c87c5ba700a3504",
+      "pgaudit_sha256": "40e95407ee284cfaa6926039eb9054908ef324be3a4403ab8682d7fc18b7c929",
       "channel": "preview"
     }
   ],
