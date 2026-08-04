@@ -98,6 +98,18 @@
       "tag": "standard-rocky10-untrusted",
       "os": "rocky10",
       "untrusted": true
+    },
+    {
+      "dockerfile": "opensuse.dockerfile",
+      "tag": "standard-tumbleweed",
+      "os": "tumbleweed",
+      "untrusted": false
+    },
+    {
+      "dockerfile": "opensuse.dockerfile",
+      "tag": "standard-tumbleweed-untrusted",
+      "os": "tumbleweed",
+      "untrusted": true
     }
   ]
 }
