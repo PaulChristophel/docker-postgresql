@@ -4,7 +4,7 @@ set -euo pipefail
 
 pushd "$(cd "$(dirname "$0")" && pwd)"
 
-BASE=docker.io/photon:5.0@sha256:6db86de5ffc11d5c55e59d23790ad526b68e5bca4f030cb6a94e6136280866dd
+BASE=docker.io/photon:5.0@sha256:ab4b68e15c8ff6b9c79ba525f696260f772c711761d576dd53bf43c351c9a504
 PG_MAJOR=18
 PG_VERSION=18.4
 PG_SHA256=81a81ec695fb0c7901407defaa1d2f7973617154cf27ba74e3a7ab8e64436094
