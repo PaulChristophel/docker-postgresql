@@ -98,6 +98,18 @@
       "tag": "standard-rocky10-untrusted",
       "os": "rocky10",
       "untrusted": true
+    },
+    {
+      "dockerfile": "almalinux.dockerfile",
+      "tag": "standard-alma10",
+      "os": "alma10",
+      "untrusted": false
+    },
+    {
+      "dockerfile": "almalinux.dockerfile",
+      "tag": "standard-alma10-untrusted",
+      "os": "alma10",
+      "untrusted": true
     }
   ]
 }
