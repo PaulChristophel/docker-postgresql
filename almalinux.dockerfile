@@ -186,14 +186,18 @@ RUN dnf install -y \
     done
 
 
+FROM $BASE AS runtime-base
+
+
 FROM $BUILD_BASE AS runtime-builder
 ARG PG_MAJOR=18
 ARG WITH_UNTRUSTED_LANGUAGES=false
 
 USER root
+COPY --from=runtime-base / /mnt/rootfs/
 RUN runtime_packages="\
       bash \
-      coreutils \
+      coreutils-single \
       glibc-minimal-langpack \
       krb5-libs \
       libicu \
@@ -217,21 +221,20 @@ RUN runtime_packages="\
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
       runtime_packages="${runtime_packages} libcurl-minimal liburing"; \
     fi \
- && mkdir -p /mnt/rootfs \
+ && dnf upgrade -y \
+      --installroot=/mnt/rootfs \
+      --releasever=10 \
+      --setopt=install_weak_deps=False \
  && dnf install -y \
       --installroot=/mnt/rootfs \
       --releasever=10 \
       --setopt=install_weak_deps=False \
       ${runtime_packages} \
- && dnf upgrade -y \
-      --installroot=/mnt/rootfs \
-      --releasever=10 \
-      --setopt=install_weak_deps=False \
  && dnf clean all --installroot=/mnt/rootfs \
  && rm -rf /mnt/rootfs/var/cache/dnf
 
 
-FROM $BASE
+FROM scratch
 ARG BASE
 ARG PG_MAJOR=18
 ARG PG_VERSION=18.4
