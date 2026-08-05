@@ -1,0 +1,22 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ClusterImageCatalog
+metadata:
+  name: postgresql-standard-azure3
+  labels:
+    images.cnpg.io/family: postgresql
+    images.cnpg.io/type: standard
+    images.cnpg.io/os: azure3
+    images.cnpg.io/date: "20260805"
+    images.cnpg.io/publisher: docker.io
+spec:
+  images:
+    - major: 14
+      image: docker.io/pcm0/postgres@sha256:b0daf1517665caedc2d1658b1fb4e23debba0c23e988a6bdbdb980a9e7465730
+    - major: 15
+      image: docker.io/pcm0/postgres@sha256:8504edc80fab0cfd62e28a70ee459d05aadc1c02e78a28f2b7a14fd9ab5b3322
+    - major: 16
+      image: docker.io/pcm0/postgres@sha256:29c257f4973e6a841f51d0592de59c665a9bf0d300510ce205b373e9256f4eda
+    - major: 17
+      image: docker.io/pcm0/postgres@sha256:a5c4492dc228fe749e53803a676dc28ae12eb9817ffc6450f3b4557263dca537
+    - major: 18
+      image: docker.io/pcm0/postgres@sha256:ee78b7acd3a6ed50e3794c7ea85631da81184b0fa19598a46729120e4b296245
