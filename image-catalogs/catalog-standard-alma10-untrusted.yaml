@@ -1,0 +1,23 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ClusterImageCatalog
+metadata:
+  name: postgresql-standard-alma10-untrusted
+  labels:
+    images.cnpg.io/family: postgresql
+    images.cnpg.io/type: standard
+    images.cnpg.io/os: alma10
+    images.cnpg.io/date: "20260805"
+    images.cnpg.io/publisher: docker.io
+    images.cnpg.io/languages: untrusted
+spec:
+  images:
+    - major: 14
+      image: docker.io/pcm0/postgres@sha256:e323553f8ca0ccd0b87dd60e21d1a713b7c42abae9367aa88b68e254d405f2ce
+    - major: 15
+      image: docker.io/pcm0/postgres@sha256:85f6c4776c5bc33766d1a2e8e727f30a5c01be1f2217d22d4b218b4649f5dee1
+    - major: 16
+      image: docker.io/pcm0/postgres@sha256:f896f514afa1373a3a6d06b047d640919550eecc186bd64203887cb1f1ba84e0
+    - major: 17
+      image: docker.io/pcm0/postgres@sha256:6eaa462d8b6f0c8ce15481985fb5e444b7565adb9ef8e80081e2af8951b671dd
+    - major: 18
+      image: docker.io/pcm0/postgres@sha256:49ded521c58d87a51e992520fd7f9e33fd35e0eb77807c97bb6bf416229074c3
