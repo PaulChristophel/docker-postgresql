@@ -183,7 +183,44 @@ RUN tdnf install -y \
     done
 
 
-FROM $BASE
+FROM $BASE AS runtime-builder
+ARG PG_MAJOR=18
+ARG WITH_UNTRUSTED_LANGUAGES=false
+
+USER root
+RUN runtime_packages="\
+      bash \
+      ca-certificates \
+      coreutils \
+      icu \
+      krb5 \
+      pam \
+      libxml2 \
+      libxslt \
+      llvm \
+      util-linux-libs \
+      lz4 \
+      openldap \
+      openssl \
+      readline \
+      shadow-utils \
+      tzdata \
+      zlib \
+      zstd" \
+ && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
+      runtime_packages="${runtime_packages} perl python3 tcl"; \
+    fi \
+ && if [ "${PG_MAJOR}" -ge 18 ]; then \
+      runtime_packages="${runtime_packages} curl-libs liburing"; \
+    fi \
+ && mkdir -p /mnt/rootfs \
+ && tdnf --installroot /mnt/rootfs --releasever 3.0 install -y ${runtime_packages} \
+ && tdnf --installroot /mnt/rootfs --releasever 3.0 upgrade -y \
+ && tdnf --installroot /mnt/rootfs --releasever 3.0 clean all \
+ && rm -rf /mnt/rootfs/var/cache/tdnf
+
+
+FROM scratch
 ARG BASE
 ARG PG_MAJOR=18
 ARG PG_VERSION=18.4
@@ -231,34 +268,8 @@ LABEL edu.gatech.image.owner="${IMAGE_OWNER}"
 LABEL edu.gatech.image.repository="${IMAGE_REPOSITORY}"
 
 USER root
-# Top line of installs is vuln prevention
-RUN runtime_packages="\
-      icu \
-      krb5 \
-      pam \
-      libxml2 \
-      libxslt \
-      llvm \
-      util-linux-libs \
-      lz4 \
-      openldap \
-      openssl \
-      readline \
-      shadow-utils \
-      tzdata \
-      zlib \
-      zstd" \
- && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
-      runtime_packages="${runtime_packages} perl python3 tcl"; \
-    fi \
- && if [ "${PG_MAJOR}" -ge 18 ]; then \
-      runtime_packages="${runtime_packages} curl-libs liburing"; \
-    fi \
- && tdnf upgrade -y \
- && tdnf install -y ${runtime_packages} \
- && tdnf clean all \
- && rm -rf /var/cache/tdnf \
- && groupadd -g 26 postgres \
+COPY --from=runtime-builder /mnt/rootfs/ /
+RUN groupadd -g 26 postgres \
  && useradd -u 26 -g 26 -d /var/lib/pgsql -s /bin/bash postgres \
  && mkdir -p /var/lib/pgsql \
  && chown -R postgres:postgres /var/lib/pgsql

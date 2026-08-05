@@ -180,7 +180,54 @@ RUN dnf install -y \
     done
 
 
-FROM $BASE
+FROM $BASE AS runtime-builder
+ARG PG_MAJOR=18
+ARG WITH_UNTRUSTED_LANGUAGES=false
+
+USER root
+RUN runtime_packages="\
+      bash \
+      ca-certificates \
+      coreutils \
+      sqlite-libs libssh2 \
+      icu \
+      krb5-libs \
+      pam \
+      libxml2 \
+      libxslt \
+      libuuid \
+      llvm-libs \
+      lz4-libs \
+      openldap \
+      openssl-libs \
+      readline \
+      shadow-utils \
+      tzdata \
+      zlib-ng-compat \
+      zstd" \
+ && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
+      runtime_packages="${runtime_packages} perl python3 tcl"; \
+    fi \
+ && if [ "${PG_MAJOR}" -ge 18 ]; then \
+      runtime_packages="${runtime_packages} libcurl-minimal liburing"; \
+    fi \
+ && mkdir -p /mnt/rootfs \
+ && dnf install -y \
+      --installroot=/mnt/rootfs \
+      --releasever=44 \
+      --use-host-config \
+      --setopt=install_weak_deps=False \
+      ${runtime_packages} \
+ && dnf upgrade -y \
+      --installroot=/mnt/rootfs \
+      --releasever=44 \
+      --use-host-config \
+      --setopt=install_weak_deps=False \
+ && dnf clean all --installroot=/mnt/rootfs \
+ && rm -rf /mnt/rootfs/var/cache/dnf
+
+
+FROM scratch
 ARG BASE
 ARG PG_MAJOR=18
 ARG PG_VERSION=18.4
@@ -228,35 +275,8 @@ LABEL edu.gatech.image.owner="${IMAGE_OWNER}"
 LABEL edu.gatech.image.repository="${IMAGE_REPOSITORY}"
 
 USER root
-# Top line of installs is vuln prevention
-RUN runtime_packages="\
-      sqlite-libs libssh2 \
-      icu \
-      krb5-libs \
-      pam \
-      libxml2 \
-      libxslt \
-      libuuid \
-      llvm-libs \
-      lz4-libs \
-      openldap \
-      openssl-libs \
-      readline \
-      shadow-utils \
-      tzdata \
-      zlib-ng-compat \
-      zstd" \
- && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
-      runtime_packages="${runtime_packages} perl python3 tcl"; \
-    fi \
- && if [ "${PG_MAJOR}" -ge 18 ]; then \
-      runtime_packages="${runtime_packages} libcurl-minimal liburing"; \
-    fi \
- && dnf upgrade -y \
- && dnf install -y ${runtime_packages} \
- && dnf clean all \
- && rm -rf /var/cache/dnf \
- && groupadd -g 26 postgres \
+COPY --from=runtime-builder /mnt/rootfs/ /
+RUN groupadd -g 26 postgres \
  && useradd -u 26 -g 26 -d /var/lib/pgsql -s /bin/bash postgres \
  && mkdir -p /var/lib/pgsql \
  && chown -R postgres:postgres /var/lib/pgsql
