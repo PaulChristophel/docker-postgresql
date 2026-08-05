@@ -252,6 +252,7 @@ RUN runtime_packages="\
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
       runtime_packages="${runtime_packages} curl-libs"; \
     fi \
+ && tdnf upgrade -y --exclude filesystem \
  && tdnf install -y ${runtime_packages} \
  && tdnf clean all \
  && rm -rf /var/cache/tdnf \

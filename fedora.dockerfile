@@ -252,6 +252,7 @@ RUN runtime_packages="\
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
       runtime_packages="${runtime_packages} libcurl-minimal liburing"; \
     fi \
+ && dnf upgrade -y \
  && dnf install -y ${runtime_packages} \
  && dnf clean all \
  && rm -rf /var/cache/dnf \

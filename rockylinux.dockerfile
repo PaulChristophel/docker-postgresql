@@ -223,6 +223,10 @@ RUN runtime_packages="\
       --releasever=10 \
       --setopt=install_weak_deps=False \
       ${runtime_packages} \
+ && dnf upgrade -y \
+      --installroot=/mnt/rootfs \
+      --releasever=10 \
+      --setopt=install_weak_deps=False \
  && dnf clean all --installroot=/mnt/rootfs \
  && rm -rf /mnt/rootfs/var/cache/dnf
 

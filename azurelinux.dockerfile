@@ -254,6 +254,7 @@ RUN runtime_packages="\
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
       runtime_packages="${runtime_packages} curl-libs liburing"; \
     fi \
+ && tdnf upgrade -y \
  && tdnf install -y ${runtime_packages} \
  && tdnf clean all \
  && rm -rf /var/cache/tdnf \
