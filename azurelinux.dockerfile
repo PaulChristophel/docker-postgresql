@@ -233,13 +233,12 @@ LABEL edu.gatech.image.repository="${IMAGE_REPOSITORY}"
 USER root
 # Top line of installs is vuln prevention
 RUN runtime_packages="\
-      sqlite-libs libssh2 \
       icu \
       krb5 \
-      Linux-PAM \
+      pam \
       libxml2 \
       libxslt \
-      libllvm \
+      llvm \
       util-linux-libs \
       lz4 \
       openldap \
