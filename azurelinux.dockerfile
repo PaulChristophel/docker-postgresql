@@ -190,6 +190,7 @@ ARG WITH_UNTRUSTED_LANGUAGES=false
 USER root
 RUN runtime_packages="\
       bash \
+      azurelinux-release \
       ca-certificates \
       coreutils \
       icu \

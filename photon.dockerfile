@@ -201,6 +201,7 @@ RUN runtime_packages="\
       lz4 \
       openldap \
       openssl \
+      photon-release \
       readline \
       shadow \
       tzdata \
