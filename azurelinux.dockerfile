@@ -59,7 +59,7 @@ RUN build_packages="\
       build_packages="${build_packages} python3-devel tcl-devel"; \
     fi \
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
-      build_packages="${build_packages} curl-devel"; \
+      build_packages="${build_packages} curl-devel liburing-devel"; \
     fi \
  && tdnf install -y ${build_packages} \
  && wget -O /tmp/postgresql.tar.bz2 https://ftp.postgresql.org/pub/source/v${PG_VERSION}/postgresql-${PG_VERSION}.tar.bz2 \
@@ -87,7 +87,7 @@ RUN configure_untrusted="" \
       configure_untrusted="--with-perl --with-python --with-tcl"; \
     fi \
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
-      configure_modern="--with-libcurl"; \
+      configure_modern="--with-libcurl --with-liburing"; \
     fi \
  && ./configure \
       CFLAGS="${POSTGRES_CFLAGS}" \
@@ -252,7 +252,7 @@ RUN runtime_packages="\
       runtime_packages="${runtime_packages} perl python3 tcl"; \
     fi \
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
-      runtime_packages="${runtime_packages} curl-libs"; \
+      runtime_packages="${runtime_packages} curl-libs liburing"; \
     fi \
  && tdnf install -y ${runtime_packages} \
  && tdnf clean all \
@@ -286,6 +286,7 @@ RUN postgres --version \
  && test -e /usr/share/zoneinfo/UTC \
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
       pg_config --configure | grep -q -- '--with-libcurl'; \
+      pg_config --configure | grep -q -- '--with-liburing'; \
       set -- /usr/pgsql/${PG_MAJOR}/lib/libpq-oauth*; test -e "$1"; \
     fi \
  && mkdir /tmp/pg-smoke-socket \
