@@ -4,6 +4,7 @@ ARG BASE=mcr.microsoft.com/azurelinux/base/core:3.0@sha256:4ecd6b297db85c54ec2df
 ARG IMAGE_TITLE="CloudNativePG PostgreSQL on Azure Linux"
 ARG IMAGE_DESCRIPTION="PostgreSQL built from upstream source on Azure Linux for CloudNativePG."
 ARG IMAGE_AUTHORS="Paul Christophel <pmartin@gatech.edu>"
+ARG IMAGE_OWNER="Paul Christophel <pmartin@gatech.edu>"
 ARG IMAGE_VENDOR="Paul Christophel"
 ARG IMAGE_SOURCE="https://github.com/PaulChristophel/docker-postgresql"
 ARG IMAGE_REPOSITORY="docker.io/pcm0/postgres"
@@ -245,6 +246,7 @@ ARG IMAGE_REVISION
 ARG IMAGE_CREATED
 ARG IMAGE_LICENSES
 
+LABEL maintainer="${IMAGE_AUTHORS}"
 LABEL org.opencontainers.image.created="${IMAGE_CREATED}"
 LABEL org.opencontainers.image.base.name="${BASE}"
 LABEL org.opencontainers.image.authors="${IMAGE_AUTHORS}"

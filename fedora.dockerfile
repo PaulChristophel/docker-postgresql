@@ -4,6 +4,7 @@ ARG BASE=docker.io/fedora:44@sha256:6c75d5bf57cb0fa5aa4b92c6a83c86c791644496d9ac
 ARG IMAGE_TITLE="CloudNativePG PostgreSQL on Fedora"
 ARG IMAGE_DESCRIPTION="PostgreSQL built from upstream source on Fedora OS for CloudNativePG."
 ARG IMAGE_AUTHORS="Paul Christophel <pmartin@gatech.edu>"
+ARG IMAGE_OWNER="Paul Christophel <pmartin@gatech.edu>"
 ARG IMAGE_VENDOR="Paul Christophel"
 ARG IMAGE_SOURCE="https://github.com/PaulChristophel/docker-postgresql"
 ARG IMAGE_REPOSITORY="docker.io/pcm0/postgres"
@@ -251,6 +252,7 @@ ARG IMAGE_REVISION
 ARG IMAGE_CREATED
 ARG IMAGE_LICENSES
 
+LABEL maintainer="${IMAGE_AUTHORS}"
 LABEL org.opencontainers.image.created="${IMAGE_CREATED}"
 LABEL org.opencontainers.image.base.name="${BASE}"
 LABEL org.opencontainers.image.authors="${IMAGE_AUTHORS}"

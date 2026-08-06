@@ -5,6 +5,7 @@ ARG BUILD_BASE=docker.io/almalinux:10-kitten@sha256:95deefe15f77c78b69fcece224a0
 ARG IMAGE_TITLE="CloudNativePG PostgreSQL on AlmaLinux"
 ARG IMAGE_DESCRIPTION="PostgreSQL built from upstream source on AlmaLinux for CloudNativePG."
 ARG IMAGE_AUTHORS="Paul Christophel <pmartin@gatech.edu>"
+ARG IMAGE_OWNER="Paul Christophel <pmartin@gatech.edu>"
 ARG IMAGE_VENDOR="Paul Christophel"
 ARG IMAGE_SOURCE="https://github.com/PaulChristophel/docker-postgresql"
 ARG IMAGE_REPOSITORY="docker.io/pcm0/postgres"
@@ -255,6 +256,7 @@ ARG IMAGE_REVISION
 ARG IMAGE_CREATED
 ARG IMAGE_LICENSES
 
+LABEL maintainer="${IMAGE_AUTHORS}"
 LABEL org.opencontainers.image.created="${IMAGE_CREATED}"
 LABEL org.opencontainers.image.base.name="${BASE}"
 LABEL org.opencontainers.image.authors="${IMAGE_AUTHORS}"
