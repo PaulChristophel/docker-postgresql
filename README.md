@@ -1,9 +1,9 @@
 # PostgreSQL images for CloudNativePG
 
-This repository builds PostgreSQL from upstream source for use with
-[CloudNativePG](https://cloudnative-pg.io/). The same PostgreSQL release is
-built on several maintained Linux distributions, providing a practical range
-of compiler and system-library versions without relying on Linux releases that
+This repository builds PostgreSQL standard images from upstream source for use
+with [CloudNativePG](https://cloudnative-pg.io/). Each PostgreSQL release is
+built on five maintained Linux distributions, providing a practical range of
+compiler and system-library versions without relying on Linux releases that
 are already near the end of their support life.
 
 Published images are available from
@@ -26,21 +26,24 @@ useful maintenance horizons.
 The current bases are:
 
 - Fedora 44, representing a fast-moving distribution and newer toolchain.
-- Rocky Linux 10, representing an enterprise Linux toolchain and lifecycle.
 - Photon OS 5, representing VMware's compact, container-oriented distribution.
+- Rocky Linux 10 and AlmaLinux 10, representing enterprise Linux toolchains
+  and lifecycles.
+- Azure Linux 3, representing Microsoft's compact container-focused
+  distribution.
 
 This is useful both for finding compiler-sensitive PostgreSQL problems and for
 offering operators a choice of supported base environments. It is not intended
-to make the three images byte-for-byte identical; the common contract is the
+to make the images byte-for-byte identical; the common contract is the
 PostgreSQL feature set and CloudNativePG compatibility.
 
 ## Image matrix
 
-The release workflow builds each configured PostgreSQL version for all three
-operating systems:
+The release workflow currently builds 60 images: six PostgreSQL release lines
+across five operating systems, each with standard and untrusted variants.
 
 - PostgreSQL 14 through 18 are published through the stable catalogs.
-- PostgreSQL 19 prereleases are published through separate preview catalogs.
+- PostgreSQL 19 beta releases are published through separate preview catalogs.
 - Each OS has a standard variant and a corresponding `-untrusted` variant.
 - Images currently target `linux/amd64`.
 
@@ -53,6 +56,13 @@ PostgreSQL is compiled from the official upstream source archive rather than
 installed from a distribution PostgreSQL package. Every build runs the
 PostgreSQL `check-world` test suite and an image-level smoke test.
 
+The final images are assembled `FROM scratch`. Their runtime filesystems are
+created by the selected distribution's package manager, including the resolved
+dependency closure, CA certificates, time-zone data, OS identity, and RPM
+database. PostgreSQL and its extensions are then copied from their build
+stages. This keeps the runtime images focused while preserving the package
+metadata used by vulnerability scanners.
+
 The images include the capabilities expected from a CloudNativePG standard
 image, including:
 
@@ -63,8 +73,9 @@ image, including:
 - `pgaudit`;
 - the full set of PostgreSQL programs installed by `install-world-bin`.
 
-PostgreSQL 18 and later are additionally built with the supported libcurl
-integration. Linux distributions that package it also enable liburing.
+PostgreSQL 18 and later are additionally built with libcurl integration.
+Fedora, Rocky Linux, AlmaLinux, and Azure Linux also enable liburing; Photon OS
+does not currently provide it.
 
 The default variants deliberately omit the Perl, Python, and Tcl runtimes and
 their untrusted procedural languages. Tags ending in `-untrusted` add
@@ -114,12 +125,14 @@ spec:
 ```
 
 Preview catalogs have names ending in `-preview` and should be treated as
-preproduction images.
+preproduction images. Select the matching `-untrusted` catalog only when the
+cluster requires Perl, Python, or Tcl untrusted procedural languages.
 
 ## Building locally
 
 The Dockerfiles accept the same build arguments used by the release workflow.
-For a quick build using a Dockerfile's current PostgreSQL defaults:
+Their defaults currently build PostgreSQL 18.4 with pg_cron 1.6.7, pgvector
+0.8.6, and pgAudit 18.0. For a local Photon build using those defaults:
 
 ```sh
 /opt/homebrew/bin/podman build \
@@ -128,15 +141,20 @@ For a quick build using a Dockerfile's current PostgreSQL defaults:
   -t localhost/postgres:standard-photon5 .
 ```
 
-`photon.sh` provides a local Photon build-and-push example with all source
-versions, checksums, and OCI metadata supplied explicitly.
+Use another distribution's Dockerfile to build its corresponding variant. Add
+`--build-arg WITH_UNTRUSTED_LANGUAGES=true` for an untrusted-language image.
 
 ## Release process
 
-The GitHub Actions release workflow expands `images.json` into a PostgreSQL ×
-image-variant build matrix. It builds and publishes every image, records the
-registry digest, creates a provenance attestation, and regenerates the
-CloudNativePG catalogs with immutable image references.
+The GitHub Actions release workflow runs for relevant changes on `main`, every
+Monday, and on manual dispatch. It expands `images.json` into a PostgreSQL ×
+image-variant build matrix, then builds and publishes every image to Docker
+Hub. Each publication includes a BuildKit SBOM and a separate GitHub-generated
+provenance attestation.
+
+After every matrix build succeeds, the workflow records the registry digests,
+regenerates the CloudNativePG catalogs with immutable image references, and
+opens an automatically merged catalog update pull request.
 
 Base images and downloaded source archives are digest- or checksum-pinned.
 Updating a PostgreSQL release, extension revision, or image variant should
