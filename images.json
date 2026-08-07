@@ -1,8 +1,66 @@
 {
   "image": "docker.io/pcm0/postgres",
   "defaults": {
+    "pg_cron_version": "1.6.7",
     "pg_cron_commit": "465b38c737f584d520229f5a1d69d1d44649e4e5",
-    "pg_cron_sha256": "ab41d388d845c05ab6f34fa8e12011da2d71f7f562194ee105a6fdecb506a70f"
+    "pg_cron_sha256": "ab41d388d845c05ab6f34fa8e12011da2d71f7f562194ee105a6fdecb506a70f",
+    "pgvector_version": "0.8.6",
+    "pgvector_commit": "8ee86c96f0fd72390f890aa8a336fda6d3ab4c6c",
+    "pgvector_sha256": "d076a3098010905fd60256649327809651f6288327db6413f0938305f62ea299"
+  },
+  "language_versions": {
+    "photon5": {
+      "python": "3.14",
+      "perl": "5.42",
+      "tcl": "8.6"
+    },
+    "fedora44": {
+      "python": "3.14",
+      "perl": "5.42",
+      "tcl": "9.0"
+    },
+    "rocky10": {
+      "python": "3.12",
+      "perl": "5.40",
+      "tcl": "8.6"
+    },
+    "alma10": {
+      "python": "3.12",
+      "perl": "5.40",
+      "tcl": "8.6"
+    },
+    "azure3": {
+      "python": "3.12",
+      "perl": "5.38",
+      "tcl": "8.6"
+    }
+  },
+  "distributions": {
+    "photon5": {
+      "name": "photon",
+      "version": "5.0",
+      "base": "docker.io/photon:5.0@sha256:ab4b68e15c8ff6b9c79ba525f696260f772c711761d576dd53bf43c351c9a504"
+    },
+    "fedora44": {
+      "name": "fedora",
+      "version": "44",
+      "base": "docker.io/fedora:44@sha256:6c75d5bf57cb0fa5aa4b92c6a83c86c791644496d9ac230de7711f5b8ec3b898"
+    },
+    "rocky10": {
+      "name": "rockylinux",
+      "version": "10",
+      "base": "docker.io/rockylinux/rockylinux:10-ubi-micro@sha256:187d27b1e4d4305bac2a965fe1cb2de29f2fa85f93bcd60af55daf1a697f19ae"
+    },
+    "alma10": {
+      "name": "almalinux-kitten",
+      "version": "10",
+      "base": "docker.io/almalinux:10-kitten-minimal@sha256:515a829404b2b5d25d0da6f6c8359bcc83d54974c9ce829a8854ac3f792a20ed"
+    },
+    "azure3": {
+      "name": "azurelinux",
+      "version": "3.0",
+      "base": "mcr.microsoft.com/azurelinux/base/core:3.0@sha256:4ecd6b297db85c54ec2df07145a28536c3655a3e98e54eb2364189bc4e6eac23"
+    }
   },
   "postgresql": [
     {
@@ -54,6 +112,7 @@
       "major": 19,
       "version": "19beta2",
       "sha256": "f1fb4373f4b0f4db896964f3e5b01658ff0acebd595da7558436ccf0d63b82b2",
+      "pg_cron_version": "1.6.7+git.c7609cce",
       "pg_cron_commit": "c7609cce5c9f5fd8bcbab536cef08803a38bf6c1",
       "pg_cron_sha256": "f566a711199227715f871eebd21abea744bf9510d041ede7e86c1916bbaa8826",
       "pgaudit_version": "19.0",

@@ -38,8 +38,8 @@ jobs:
         id: matrix
         run: |
           echo "image=$(jq -r '.image' images.json)" >> "$GITHUB_OUTPUT"
-          echo "postgresql=$(jq -c '.defaults as $defaults | [.postgresql[] | . + {pg_cron_commit: (.pg_cron_commit // $defaults.pg_cron_commit), pg_cron_sha256: (.pg_cron_sha256 // $defaults.pg_cron_sha256)}]' images.json)" >> "$GITHUB_OUTPUT"
-          echo "variants=$(jq -c '.variants' images.json)" >> "$GITHUB_OUTPUT"
+          echo "postgresql=$(jq -c '.defaults as $defaults | [.postgresql[] | . + {pg_cron_version: (.pg_cron_version // $defaults.pg_cron_version), pg_cron_commit: (.pg_cron_commit // $defaults.pg_cron_commit), pg_cron_sha256: (.pg_cron_sha256 // $defaults.pg_cron_sha256), pgvector_version: (.pgvector_version // $defaults.pgvector_version), pgvector_commit: (.pgvector_commit // $defaults.pgvector_commit), pgvector_sha256: (.pgvector_sha256 // $defaults.pgvector_sha256)}]' images.json)" >> "$GITHUB_OUTPUT"
+          echo "variants=$(jq -c '.language_versions as $languages | .distributions as $distributions | [.variants[] | . + {trust: (if .untrusted then "untrusted" else "trusted" end), python_version: (if .untrusted then $languages[.os].python else "not-installed" end), perl_version: (if .untrusted then $languages[.os].perl else "not-installed" end), tcl_version: (if .untrusted then $languages[.os].tcl else "not-installed" end), distribution: $distributions[.os].name, distribution_version: $distributions[.os].version, base: $distributions[.os].base}]' images.json)" >> "$GITHUB_OUTPUT"
 
   build:
     name: PostgreSQL ${{ matrix.postgresql.major }} ${{ matrix.variant.tag }}
@@ -95,12 +95,23 @@ jobs:
             org.opencontainers.image.licenses=AGPL-3.0-or-later
             org.opencontainers.image.version=${{ matrix.postgresql.version }}
             org.opencontainers.image.ref.name=${{ env.IMAGE_NAME }}:${{ matrix.postgresql.version }}-${{ matrix.variant.tag }}
+            org.opencontainers.image.base.name=${{ matrix.variant.base }}
             org.opencontainers.image.component.postgresql.version=${{ matrix.postgresql.version }}
+            org.opencontainers.image.component.pg_cron.version=${{ matrix.postgresql.pg_cron_version }}
             org.opencontainers.image.component.pg_cron.revision=${{ matrix.postgresql.pg_cron_commit }}
+            org.opencontainers.image.component.pgvector.version=${{ matrix.postgresql.pgvector_version }}
+            org.opencontainers.image.component.pgvector.revision=${{ matrix.postgresql.pgvector_commit }}
             org.opencontainers.image.component.pgaudit.version=${{ matrix.postgresql.pgaudit_version }}
             org.opencontainers.image.component.pgaudit.revision=${{ matrix.postgresql.pgaudit_commit }}
+            org.opencontainers.image.component.python.version=${{ matrix.variant.python_version }}
+            org.opencontainers.image.component.perl.version=${{ matrix.variant.perl_version }}
+            org.opencontainers.image.component.tcl.version=${{ matrix.variant.tcl_version }}
             edu.gatech.image.owner=Paul Christophel <pmartin@gatech.edu>
             edu.gatech.image.repository=${{ env.IMAGE_NAME }}
+            edu.gatech.image.variant.trust=${{ matrix.variant.trust }}
+            edu.gatech.image.untrusted-languages=${{ matrix.variant.untrusted }}
+            edu.gatech.image.os.distribution=${{ matrix.variant.distribution }}
+            edu.gatech.image.os.version=${{ matrix.variant.distribution_version }}
 
       - name: Build and push image
         id: push
@@ -116,12 +127,23 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
           annotations: ${{ steps.metadata.outputs.annotations }}
           build-args: |
+            BASE=${{ matrix.variant.base }}
             PG_MAJOR=${{ matrix.postgresql.major }}
             PG_VERSION=${{ matrix.postgresql.version }}
             PG_SHA256=${{ matrix.postgresql.sha256 }}
             WITH_UNTRUSTED_LANGUAGES=${{ matrix.variant.untrusted }}
+            PYTHON_VERSION=${{ matrix.variant.python_version }}
+            PERL_VERSION=${{ matrix.variant.perl_version }}
+            TCL_VERSION=${{ matrix.variant.tcl_version }}
+            IMAGE_TRUST=${{ matrix.variant.trust }}
+            IMAGE_DISTRIBUTION=${{ matrix.variant.distribution }}
+            IMAGE_DISTRIBUTION_VERSION=${{ matrix.variant.distribution_version }}
+            PG_CRON_VERSION=${{ matrix.postgresql.pg_cron_version }}
             PG_CRON_COMMIT=${{ matrix.postgresql.pg_cron_commit }}
             PG_CRON_SOURCE_SHA256=${{ matrix.postgresql.pg_cron_sha256 }}
+            PGVECTOR_VERSION=${{ matrix.postgresql.pgvector_version }}
+            PGVECTOR_COMMIT=${{ matrix.postgresql.pgvector_commit }}
+            PGVECTOR_SOURCE_SHA256=${{ matrix.postgresql.pgvector_sha256 }}
             PGAUDIT_VERSION=${{ matrix.postgresql.pgaudit_version }}
             PGAUDIT_COMMIT=${{ matrix.postgresql.pgaudit_commit }}
             PGAUDIT_SOURCE_SHA256=${{ matrix.postgresql.pgaudit_sha256 }}

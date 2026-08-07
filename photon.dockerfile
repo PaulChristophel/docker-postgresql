@@ -228,6 +228,12 @@ ARG BASE
 ARG PG_MAJOR=18
 ARG PG_VERSION=18.4
 ARG WITH_UNTRUSTED_LANGUAGES=false
+ARG PYTHON_VERSION=not-installed
+ARG PERL_VERSION=not-installed
+ARG TCL_VERSION=not-installed
+ARG IMAGE_TRUST=trusted
+ARG IMAGE_DISTRIBUTION=unknown
+ARG IMAGE_DISTRIBUTION_VERSION=unknown
 ARG PG_CRON_VERSION=1.6.7
 ARG PG_CRON_COMMIT=465b38c737f584d520229f5a1d69d1d44649e4e5
 ARG PGVECTOR_VERSION=0.8.6
@@ -250,6 +256,8 @@ ARG IMAGE_LICENSES
 LABEL maintainer="${IMAGE_AUTHORS}"
 LABEL org.opencontainers.image.created="${IMAGE_CREATED}"
 LABEL org.opencontainers.image.base.name="${BASE}"
+LABEL edu.gatech.image.os.distribution="${IMAGE_DISTRIBUTION}"
+LABEL edu.gatech.image.os.version="${IMAGE_DISTRIBUTION_VERSION}"
 LABEL org.opencontainers.image.authors="${IMAGE_AUTHORS}"
 LABEL org.opencontainers.image.title="${IMAGE_TITLE}"
 LABEL org.opencontainers.image.description="${IMAGE_DESCRIPTION}"
@@ -268,8 +276,13 @@ LABEL org.opencontainers.image.component.pgvector.version="${PGVECTOR_VERSION}"
 LABEL org.opencontainers.image.component.pgvector.revision="${PGVECTOR_COMMIT}"
 LABEL org.opencontainers.image.component.pgaudit.version="${PGAUDIT_VERSION}"
 LABEL org.opencontainers.image.component.pgaudit.revision="${PGAUDIT_COMMIT}"
+LABEL org.opencontainers.image.component.python.version="${PYTHON_VERSION}"
+LABEL org.opencontainers.image.component.perl.version="${PERL_VERSION}"
+LABEL org.opencontainers.image.component.tcl.version="${TCL_VERSION}"
 LABEL edu.gatech.image.owner="${IMAGE_OWNER}"
 LABEL edu.gatech.image.repository="${IMAGE_REPOSITORY}"
+LABEL edu.gatech.image.variant.trust="${IMAGE_TRUST}"
+LABEL edu.gatech.image.untrusted-languages="${WITH_UNTRUSTED_LANGUAGES}"
 
 USER root
 COPY --from=runtime-builder /mnt/rootfs/ /
@@ -292,6 +305,10 @@ RUN chown -R root:root /usr/pgsql/${PG_MAJOR} \
       for extension in plperl plpython3u pltcl; do \
         test ! -e "/usr/pgsql/${PG_MAJOR}/share/extension/${extension}.control"; \
       done; \
+    else \
+      python3 --version 2>&1 | grep -q "^Python ${PYTHON_VERSION}\\."; \
+      perl -e 'printf "%vd\\n", $^V' | grep -q "^${PERL_VERSION}\\."; \
+      echo 'puts [info patchlevel]' | tclsh | grep -q "^${TCL_VERSION}\\."; \
     fi
 ENV PATH=/usr/pgsql/${PG_MAJOR}/bin:$PATH
 USER postgres

@@ -60,6 +60,8 @@ podman build \
     --build-arg IMAGE_REVISION="${IMAGE_REVISION}" \
     --build-arg IMAGE_CREATED="${IMAGE_CREATED}" \
     --build-arg IMAGE_LICENSES="${IMAGE_LICENSES}" \
+    --build-arg IMAGE_DISTRIBUTION=photon \
+    --build-arg IMAGE_DISTRIBUTION_VERSION=5.0 \
     --annotation "org.opencontainers.image.title=${IMAGE_TITLE}" \
     --annotation "org.opencontainers.image.description=${IMAGE_DESCRIPTION}" \
     --annotation "org.opencontainers.image.authors=${IMAGE_AUTHORS}" \
@@ -80,6 +82,13 @@ podman build \
     --annotation "org.opencontainers.image.component.pgvector.revision=${PGVECTOR_COMMIT}" \
     --annotation "org.opencontainers.image.component.pgaudit.version=${PGAUDIT_VERSION}" \
     --annotation "org.opencontainers.image.component.pgaudit.revision=${PGAUDIT_COMMIT}" \
+    --annotation "org.opencontainers.image.component.python.version=not-installed" \
+    --annotation "org.opencontainers.image.component.perl.version=not-installed" \
+    --annotation "org.opencontainers.image.component.tcl.version=not-installed" \
+    --annotation "edu.gatech.image.variant.trust=trusted" \
+    --annotation "edu.gatech.image.untrusted-languages=false" \
+    --annotation "edu.gatech.image.os.distribution=photon" \
+    --annotation "edu.gatech.image.os.version=5.0" \
     --platform=linux/amd64 \
     -f photon.dockerfile \
     -t "${IMAGE_REPOSITORY}:${TAG}"
