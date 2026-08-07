@@ -66,9 +66,15 @@ jobs:
           username: pcm0
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Record build timestamp
+        id: build-time
+        run: echo "created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+
       - name: Generate image metadata
         id: metadata
         uses: docker/metadata-action@v6
+        env:
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
@@ -76,10 +82,25 @@ jobs:
             type=raw,value=${{ matrix.postgresql.major }}-${{ matrix.variant.tag }}
             type=raw,value=latest,enable=${{ matrix.postgresql.major == 18 && matrix.variant.tag == 'standard-photon5' }}
             type=sha,prefix=${{ matrix.postgresql.major }}-${{ matrix.variant.tag }}-sha-
-
-      - name: Record build timestamp
-        id: build-time
-        run: echo "created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+          annotations: |
+            org.opencontainers.image.title=CloudNativePG PostgreSQL ${{ matrix.postgresql.version }} (${{ matrix.variant.tag }})
+            org.opencontainers.image.description=PostgreSQL ${{ matrix.postgresql.version }} built from upstream source for CloudNativePG using the ${{ matrix.variant.tag }} variant.
+            org.opencontainers.image.authors=Paul Christophel <pmartin@gatech.edu>
+            org.opencontainers.image.vendor=Paul Christophel
+            org.opencontainers.image.source=https://github.com/PaulChristophel/docker-postgresql
+            org.opencontainers.image.url=https://hub.docker.com/r/pcm0/postgres
+            org.opencontainers.image.documentation=https://github.com/PaulChristophel/docker-postgresql#readme
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.created=${{ steps.build-time.outputs.created }}
+            org.opencontainers.image.licenses=AGPL-3.0-or-later
+            org.opencontainers.image.version=${{ matrix.postgresql.version }}
+            org.opencontainers.image.ref.name=${{ env.IMAGE_NAME }}:${{ matrix.postgresql.version }}-${{ matrix.variant.tag }}
+            org.opencontainers.image.component.postgresql.version=${{ matrix.postgresql.version }}
+            org.opencontainers.image.component.pg_cron.revision=${{ matrix.postgresql.pg_cron_commit }}
+            org.opencontainers.image.component.pgaudit.version=${{ matrix.postgresql.pgaudit_version }}
+            org.opencontainers.image.component.pgaudit.revision=${{ matrix.postgresql.pgaudit_commit }}
+            edu.gatech.image.owner=Paul Christophel <pmartin@gatech.edu>
+            edu.gatech.image.repository=${{ env.IMAGE_NAME }}
 
       - name: Build and push image
         id: push
@@ -93,6 +114,7 @@ jobs:
           sbom: true
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
+          annotations: ${{ steps.metadata.outputs.annotations }}
           build-args: |
             PG_MAJOR=${{ matrix.postgresql.major }}
             PG_VERSION=${{ matrix.postgresql.version }}
