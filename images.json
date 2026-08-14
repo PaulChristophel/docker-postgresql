@@ -110,8 +110,8 @@
     },
     {
       "major": 19,
-      "version": "19beta2",
-      "sha256": "f1fb4373f4b0f4db896964f3e5b01658ff0acebd595da7558436ccf0d63b82b2",
+      "version": "19beta3",
+      "sha256": "ea4ad8933121930a58f23c73dc99c26a4184faca26faefa77d15ce0fba7dfe2c",
       "pg_cron_version": "1.6.7+git.c7609cce",
       "pg_cron_commit": "c7609cce5c9f5fd8bcbab536cef08803a38bf6c1",
       "pg_cron_sha256": "f566a711199227715f871eebd21abea744bf9510d041ede7e86c1916bbaa8826",
