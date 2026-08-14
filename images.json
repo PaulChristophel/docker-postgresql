@@ -65,8 +65,8 @@
   "postgresql": [
     {
       "major": 14,
-      "version": "14.23",
-      "sha256": "cc7216822b546330e29c2f91e123c8734a4c41795082145bb962aa712e8c94a5",
+      "version": "14.24",
+      "sha256": "a7fa7ed3d558172355f51406097a7bd4f6b473be80f311ef7cda96bf383d8897",
       "pgaudit_version": "1.6.3",
       "pgaudit_commit": "abdb653a57228c28c52600aefa4852616eb6b0af",
       "pgaudit_sha256": "cef4a1424fafd373f20e5d89bc8b20c904b9fc875ddbf805bb2896d716643b65",
@@ -74,8 +74,8 @@
     },
     {
       "major": 15,
-      "version": "15.18",
-      "sha256": "11df0df97fe3ea4ba9a791faaf39cee1d2fe571e78885b5b55d8517d27c323b4",
+      "version": "15.19",
+      "sha256": "e1a64a87a46b825b88c082e4518161a47aab53c45694964f8ba1df28f7859f89",
       "pgaudit_version": "1.7.1",
       "pgaudit_commit": "72da89c3fa02f3f2b9f3933214d91ad9c3428467",
       "pgaudit_sha256": "3a27de4da689463ec92a2cc2edaf9d0a8e45fb814bb6d8fa277442d1284d2ba1",
@@ -83,8 +83,8 @@
     },
     {
       "major": 16,
-      "version": "16.14",
-      "sha256": "f6d077142737920858ce958ccdb75c6ee137a63b5b0853c70693d401ac7e3471",
+      "version": "16.15",
+      "sha256": "c1575341fa7bd40f5274ea465b34390f4dc64cdd0770af327005caaeb9f6b7ed",
       "pgaudit_version": "16.1",
       "pgaudit_commit": "a81792e8a4ea8f7aaf75bd610fcc4c2f96650bdc",
       "pgaudit_sha256": "92e9c932ee0b07cbd041187bed04faae23769b80a0bca89800fcaddbf7131153",
@@ -92,8 +92,8 @@
     },
     {
       "major": 17,
-      "version": "17.10",
-      "sha256": "078a03516dcdbdb705fecaf415ea3d13a956c589e46f09fed68a06fb00598c90",
+      "version": "17.11",
+      "sha256": "dd27f2b3c59e73ed14aa3324901242bf69a032a6347805f274e6260322d42979",
       "pgaudit_version": "17.1",
       "pgaudit_commit": "266ada37842d9c6d7a0623065cbfe915f2572f74",
       "pgaudit_sha256": "3c5f72bd54f7a7e1c82a4fd1fdb75cc2cdf61eba4913a579f69071eb42c49331",
@@ -101,8 +101,8 @@
     },
     {
       "major": 18,
-      "version": "18.4",
-      "sha256": "81a81ec695fb0c7901407defaa1d2f7973617154cf27ba74e3a7ab8e64436094",
+      "version": "18.6",
+      "sha256": "555610c24d53e4316da5b7d3fc25c279d96856d5e0e23ee308c328c5fa881d9f",
       "pgaudit_version": "18.0",
       "pgaudit_commit": "f39f8dbb15dc5bd4cbe5f1e5abe0d930ed7593a8",
       "pgaudit_sha256": "bbfc57be090c82b4efd8f8ed7f613e2d8537c38c35f25bb2d1c005d5747ef2e4",
