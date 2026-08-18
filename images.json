@@ -46,6 +46,11 @@
       "version": "44",
       "base": "docker.io/fedora:44@sha256:6c75d5bf57cb0fa5aa4b92c6a83c86c791644496d9ac230de7711f5b8ec3b898"
     },
+    "fedora45": {
+      "name": "fedora",
+      "version": "45",
+      "base": "docker.io/fedora:45@sha256:0c1f63ed8fb818fad16cf6ae091598c410a21d2e1a9adf183beb93189299bfba"
+    },
     "rocky10": {
       "name": "rockylinux",
       "version": "10",
@@ -142,8 +147,20 @@
     },
     {
       "dockerfile": "fedora.dockerfile",
+      "tag": "standard-fedora45",
+      "os": "fedora45",
+      "untrusted": false
+    },
+    {
+      "dockerfile": "fedora.dockerfile",
       "tag": "standard-fedora44-untrusted",
       "os": "fedora44",
+      "untrusted": true
+    },
+    {
+      "dockerfile": "fedora.dockerfile",
+      "tag": "standard-fedora45-untrusted",
+      "os": "fedora45",
       "untrusted": true
     },
     {
