@@ -1,0 +1,23 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ClusterImageCatalog
+metadata:
+  name: postgresql-standard-fedora45-untrusted
+  labels:
+    images.cnpg.io/family: postgresql
+    images.cnpg.io/type: standard
+    images.cnpg.io/os: fedora45
+    images.cnpg.io/date: "20260818"
+    images.cnpg.io/publisher: docker.io
+    images.cnpg.io/languages: untrusted
+spec:
+  images:
+    - major: 14
+      image: docker.io/pcm0/postgres@sha256:79a68f3e6d2bfe347bdfe3ea201c6189f2a244b4f656191a75c7e47759b84fc8
+    - major: 15
+      image: docker.io/pcm0/postgres@sha256:8370021d6ac121e29f6ede92160f8247cda55d95cd4bc14327670be65543d131
+    - major: 16
+      image: docker.io/pcm0/postgres@sha256:29e8befff0d4fd201157b6235cf65bf13df35bc1161f351993519f313e34445b
+    - major: 17
+      image: docker.io/pcm0/postgres@sha256:221bec8caedf566374c537830b7049ceea85a963cccb170663b9fe2f474d30b2
+    - major: 18
+      image: docker.io/pcm0/postgres@sha256:5756f1b75befedae129209cf82104373a73ddef36c8e80f76f0e2658f22ee778
