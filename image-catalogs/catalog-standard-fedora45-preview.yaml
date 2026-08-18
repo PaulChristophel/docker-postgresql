@@ -1,15 +1,15 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ClusterImageCatalog
 metadata:
-  name: postgresql-standard-alma10-preview
+  name: postgresql-standard-fedora45-preview
   labels:
     images.cnpg.io/family: postgresql
     images.cnpg.io/type: standard
-    images.cnpg.io/os: alma10
+    images.cnpg.io/os: fedora45
     images.cnpg.io/date: "20260818"
     images.cnpg.io/publisher: docker.io
     images.cnpg.io/channel: preview
 spec:
   images:
     - major: 19
-      image: docker.io/pcm0/postgres@sha256:632e0ed9ee8b4a7f1dc0b5609212e7d863835b47c71eef8220cb52f7a60138fe
+      image: docker.io/pcm0/postgres@sha256:ddaff9d193b0107e39a4368475eb432813af8576f2f675542e081ac41dc16ab0
