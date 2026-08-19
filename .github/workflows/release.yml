@@ -131,6 +131,7 @@ jobs:
             PG_MAJOR=${{ matrix.postgresql.major }}
             PG_VERSION=${{ matrix.postgresql.version }}
             PG_SHA256=${{ matrix.postgresql.sha256 }}
+            CPU_CFLAGS=${{ vars.CPU_CFLAGS }}
             WITH_UNTRUSTED_LANGUAGES=${{ matrix.variant.untrusted }}
             PYTHON_VERSION=${{ matrix.variant.python_version }}
             PERL_VERSION=${{ matrix.variant.perl_version }}

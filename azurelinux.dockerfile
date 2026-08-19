@@ -19,6 +19,7 @@ ARG PG_MAJOR=18
 ARG PG_VERSION=18.4
 ARG PG_SHA256=81a81ec695fb0c7901407defaa1d2f7973617154cf27ba74e3a7ab8e64436094
 ARG POSTGRES_CFLAGS="-O2 -pipe -fstack-protector-strong -D_FORTIFY_SOURCE=3"
+ARG CPU_CFLAGS=""
 ARG POSTGRES_LDFLAGS="-Wl,-z,relro,-z,now -Wl,--as-needed"
 ARG WITH_UNTRUSTED_LANGUAGES=false
 
@@ -91,7 +92,7 @@ RUN configure_untrusted="" \
       configure_modern="--with-libcurl --with-liburing"; \
     fi \
  && ./configure \
-      CFLAGS="${POSTGRES_CFLAGS}" \
+      CFLAGS="${POSTGRES_CFLAGS} ${CPU_CFLAGS}" \
       LDFLAGS="${POSTGRES_LDFLAGS}" \
       --prefix=/usr/pgsql/${PG_MAJOR} \
       --with-gssapi \

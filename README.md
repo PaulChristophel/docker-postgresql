@@ -143,6 +143,12 @@ Their defaults currently build PostgreSQL 18.4 with pg_cron 1.6.7, pgvector
 
 Use another distribution's Dockerfile to build its corresponding variant. Add
 `--build-arg WITH_UNTRUSTED_LANGUAGES=true` for an untrusted-language image.
+All image Dockerfiles also accept an optional `CPU_CFLAGS` build argument. For
+a build that runs natively on the same CPU class as its deployment nodes, add
+`--build-arg CPU_CFLAGS="-march=native -mtune=native"` on x86-64 or
+`--build-arg CPU_CFLAGS="-mcpu=native"` on AArch64. The release workflow reads
+the same value from the `CPU_CFLAGS` repository variable; when the argument or
+variable is unset, the existing portable compiler flags remain unchanged.
 
 ## Release process
 
