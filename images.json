@@ -73,33 +73,33 @@
     }
   },
   "postgresql": [
-    // {
-    //   "major": 14,
-    //   "version": "14.24",
-    //   "sha256": "a7fa7ed3d558172355f51406097a7bd4f6b473be80f311ef7cda96bf383d8897",
-    //   "pgaudit_version": "1.6.3",
-    //   "pgaudit_commit": "abdb653a57228c28c52600aefa4852616eb6b0af",
-    //   "pgaudit_sha256": "cef4a1424fafd373f20e5d89bc8b20c904b9fc875ddbf805bb2896d716643b65",
-    //   "channel": "stable"
-    // },
-    // {
-    //   "major": 15,
-    //   "version": "15.19",
-    //   "sha256": "e1a64a87a46b825b88c082e4518161a47aab53c45694964f8ba1df28f7859f89",
-    //   "pgaudit_version": "1.7.1",
-    //   "pgaudit_commit": "72da89c3fa02f3f2b9f3933214d91ad9c3428467",
-    //   "pgaudit_sha256": "3a27de4da689463ec92a2cc2edaf9d0a8e45fb814bb6d8fa277442d1284d2ba1",
-    //   "channel": "stable"
-    // },
-    // {
-    //   "major": 16,
-    //   "version": "16.15",
-    //   "sha256": "c1575341fa7bd40f5274ea465b34390f4dc64cdd0770af327005caaeb9f6b7ed",
-    //   "pgaudit_version": "16.1",
-    //   "pgaudit_commit": "a81792e8a4ea8f7aaf75bd610fcc4c2f96650bdc",
-    //   "pgaudit_sha256": "92e9c932ee0b07cbd041187bed04faae23769b80a0bca89800fcaddbf7131153",
-    //   "channel": "stable"
-    // },
+    {
+      "major": 14,
+      "version": "14.24",
+      "sha256": "a7fa7ed3d558172355f51406097a7bd4f6b473be80f311ef7cda96bf383d8897",
+      "pgaudit_version": "1.6.3",
+      "pgaudit_commit": "abdb653a57228c28c52600aefa4852616eb6b0af",
+      "pgaudit_sha256": "cef4a1424fafd373f20e5d89bc8b20c904b9fc875ddbf805bb2896d716643b65",
+      "channel": "stable"
+    },
+    {
+      "major": 15,
+      "version": "15.19",
+      "sha256": "e1a64a87a46b825b88c082e4518161a47aab53c45694964f8ba1df28f7859f89",
+      "pgaudit_version": "1.7.1",
+      "pgaudit_commit": "72da89c3fa02f3f2b9f3933214d91ad9c3428467",
+      "pgaudit_sha256": "3a27de4da689463ec92a2cc2edaf9d0a8e45fb814bb6d8fa277442d1284d2ba1",
+      "channel": "stable"
+    },
+    {
+      "major": 16,
+      "version": "16.15",
+      "sha256": "c1575341fa7bd40f5274ea465b34390f4dc64cdd0770af327005caaeb9f6b7ed",
+      "pgaudit_version": "16.1",
+      "pgaudit_commit": "a81792e8a4ea8f7aaf75bd610fcc4c2f96650bdc",
+      "pgaudit_sha256": "92e9c932ee0b07cbd041187bed04faae23769b80a0bca89800fcaddbf7131153",
+      "channel": "stable"
+    },
     {
       "major": 17,
       "version": "17.11",
