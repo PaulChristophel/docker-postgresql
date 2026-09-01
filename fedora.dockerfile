@@ -185,6 +185,7 @@ RUN dnf install -y \
 FROM $BASE AS runtime-builder
 ARG PG_MAJOR=18
 ARG WITH_UNTRUSTED_LANGUAGES=false
+ARG IMAGE_DISTRIBUTION_VERSION=unknown
 
 USER root
 RUN runtime_packages="\
@@ -201,7 +202,6 @@ RUN runtime_packages="\
       llvm-libs \
       lz4-libs \
       openldap \
-      openssl \
       openssl-libs \
       readline \
       shadow-utils \
@@ -217,13 +217,13 @@ RUN runtime_packages="\
  && mkdir -p /mnt/rootfs \
  && dnf install -y \
       --installroot=/mnt/rootfs \
-      --releasever=44 \
+      --releasever=${IMAGE_DISTRIBUTION_VERSION} \
       --use-host-config \
       --setopt=install_weak_deps=False \
       ${runtime_packages} \
  && dnf upgrade -y \
       --installroot=/mnt/rootfs \
-      --releasever=44 \
+      --releasever=${IMAGE_DISTRIBUTION_VERSION} \
       --use-host-config \
       --setopt=install_weak_deps=False \
  && dnf clean all --installroot=/mnt/rootfs \
