@@ -1,8 +1,8 @@
 # Containerfile.cnpg-postgresql-source
 
-ARG BASE=docker.io/photon:5.0@sha256:ab4b68e15c8ff6b9c79ba525f696260f772c711761d576dd53bf43c351c9a504
-ARG IMAGE_TITLE="CloudNativePG PostgreSQL on Photon"
-ARG IMAGE_DESCRIPTION="PostgreSQL built from upstream source on Photon OS for CloudNativePG."
+ARG BASE=docker.io/opensuse/tumbleweed:latest@sha256:8f6397b7b7ebc78e111d9a13fb2b157664ad5524e1f3b908deb45938b3095045
+ARG IMAGE_TITLE="CloudNativePG PostgreSQL on openSUSE Tumbleweed"
+ARG IMAGE_DESCRIPTION="PostgreSQL built from upstream source on openSUSE Tumbleweed for CloudNativePG."
 ARG IMAGE_AUTHORS="Paul Christophel <pmartin@gatech.edu>"
 ARG IMAGE_OWNER="Paul Christophel <pmartin@gatech.edu>"
 ARG IMAGE_VENDOR="Paul Christophel"
@@ -27,41 +27,43 @@ USER root
 RUN build_packages="\
       bison \
       binutils \
+      bzip2 \
       clang \
       clang-devel \
       diffutils \
       flex \
       gawk \
       gcc \
+      gcc-c++ \
       glibc-devel \
-      icu-devel \
+      libicu-devel \
       krb5-devel \
       libxml2-devel \
       libxslt-devel \
       libxcrypt-devel \
-      linux-api-headers \
+      linux-glibc-devel \
+      libuuid-devel \
       llvm-devel \
-      lz4-devel \
+      liblz4-devel \
       make \
-      openldap-devel \
-      openssl-devel \
-      Linux-PAM-devel \
+      openldap2-devel \
+      libopenssl-devel \
+      pam-devel \
       perl \
       readline-devel \
       tar \
-      tzdata \
-      util-linux-devel \
+      timezone \
       wget \
       xz \
       zlib-devel \
-      zstd-devel" \
+      libzstd-devel" \
  && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
       build_packages="${build_packages} python3-devel tcl-devel"; \
     fi \
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
-      build_packages="${build_packages} curl-devel"; \
+      build_packages="${build_packages} libcurl-devel"; \
     fi \
- && tdnf install -y ${build_packages} \
+ && zypper --non-interactive --gpg-auto-import-keys install --no-recommends ${build_packages} \
  && wget -O /tmp/postgresql.tar.bz2 https://ftp.postgresql.org/pub/source/v${PG_VERSION}/postgresql-${PG_VERSION}.tar.bz2 \
  && echo "${PG_SHA256}  /tmp/postgresql.tar.bz2" | sha256sum -c - \
  && mkdir -p /tmp/postgresql-src \
@@ -127,25 +129,25 @@ ARG PGAUDIT_SOURCE_SHA256=bbfc57be090c82b4efd8f8ed7f613e2d8537c38c35f25bb2d1c005
 COPY --from=postgres-builder /tmp/postgres-install/usr/pgsql/${PG_MAJOR} /usr/pgsql/${PG_MAJOR}
 
 USER root
-RUN tdnf install -y \
+RUN zypper --non-interactive --gpg-auto-import-keys install --no-recommends \
       binutils \
       clang \
       clang-devel \
       gcc \
       glibc-devel \
-      icu-devel \
+      libicu-devel \
       krb5-devel \
       libxml2-devel \
       libxslt-devel \
-      linux-api-headers \
+      linux-glibc-devel \
       llvm-devel \
-      lz4-devel \
+      liblz4-devel \
       make \
-      openldap-devel \
-      openssl-devel \
-      Linux-PAM-devel \
+      openldap2-devel \
+      libopenssl-devel \
+      pam-devel \
       zlib-devel \
-      zstd-devel \
+      libzstd-devel \
       tar \
       wget \
  && wget -O /tmp/pg_cron.tar.gz https://github.com/citusdata/pg_cron/archive/${PG_CRON_COMMIT}.tar.gz \
@@ -192,36 +194,38 @@ RUN runtime_packages="\
       ca-certificates \
       coreutils \
       findutils \
-      sqlite-libs libssh2 \
-      icu \
+      libsqlite3-0 \
+      libssh2-1 \
+      libicu78 \
       krb5 \
-      Linux-PAM \
-      libxml2 \
-      libxslt \
-      libllvm \
-      util-linux-libs \
-      lz4 \
-      openldap \
-      openssl \
-      photon-release \
-      readline \
+      pam \
+      libxml2-16 \
+      libxslt1 \
+      libLLVM22 \
+      libuuid1 \
+      liblz4-1 \
+      libldap2 \
+      libopenssl3 \
+      openSUSE-release \
+      libreadline8 \
       shadow \
-      tzdata \
-      zlib \
-      zstd" \
+      timezone \
+      libz1 \
+      libzstd1" \
  && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
       runtime_packages="${runtime_packages} perl python3 tcl"; \
     fi \
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
-      runtime_packages="${runtime_packages} curl-libs"; \
+      runtime_packages="${runtime_packages} libcurl4"; \
     fi \
  && mkdir -p /mnt/rootfs \
- && tdnf -i /mnt/rootfs --releasever=5.0 install -y \
-      filesystem glibc libselinux coreutils findutils \
- && tdnf -i /mnt/rootfs --releasever=5.0 install -y ${runtime_packages} \
- && tdnf -i /mnt/rootfs --releasever=5.0 upgrade -y \
- && tdnf -i /mnt/rootfs --releasever=5.0 clean all \
- && rm -rf /mnt/rootfs/var/cache/tdnf
+ && zypper --installroot /mnt/rootfs \
+      --non-interactive \
+      --gpg-auto-import-keys \
+      install --no-recommends ${runtime_packages} \
+ && zypper --installroot /mnt/rootfs --non-interactive update -y \
+ && zypper --installroot /mnt/rootfs --non-interactive clean --all \
+ && rm -rf /mnt/rootfs/var/cache/zypp
 
 
 FROM scratch
