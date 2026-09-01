@@ -253,7 +253,7 @@
       "untrusted": false
     },
     {
-      "dockerfile": "azurelinux.dockerfile",
+      "dockerfile": "fedora.dockerfile",
       "tag": "standard-azure4-untrusted",
       "os": "azure4",
       "untrusted": true
