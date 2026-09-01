@@ -11,12 +11,12 @@ metadata:
 spec:
   images:
     - major: 14
-      image: docker.io/pcm0/postgres@sha256:5bd0275017bc2b4302acd67c29ea9d90853473ccf66bcc1d41bb6c176a626e80
+      image: docker.io/pcm0/postgres@sha256:deb2c54abc6f8318110e54061a578a9e39c78b1a98ba380bae94f5323526a4f1
     - major: 15
-      image: docker.io/pcm0/postgres@sha256:3609a4a46dd5e19b2f60516244cfccda9f59f2dda53911f777473a3e840ae65e
+      image: docker.io/pcm0/postgres@sha256:2aaedac20ede11a2d48cfdf88fedfa08bf8aaa32d253f5fd6f5a2cef1906067c
     - major: 16
-      image: docker.io/pcm0/postgres@sha256:11987483c0a570e020484f7ba19dc32d60a356c6462a931a5c4837f74b538a53
+      image: docker.io/pcm0/postgres@sha256:c2492ff75fd473a02fd1d4f5c2e2f519a9e18473dcb0ba31e8ab01e3ae5e0141
     - major: 17
-      image: docker.io/pcm0/postgres@sha256:8f0babb9f3b1308c6d8eda238547b986a191ff955331c4c57fd2b85e4dbbadc9
+      image: docker.io/pcm0/postgres@sha256:6d4a5d754b1b4cb1e41f02b5674932f994b12233e5832d1e8c6fbb73d15fd8e1
     - major: 18
-      image: docker.io/pcm0/postgres@sha256:6df0c3758643c13b138c788063195c62a721883a2dbad112a59370bf6b854282
+      image: docker.io/pcm0/postgres@sha256:4570867916e07acc3f4ef2eb8f8e6319205e1fe7693b68bbedb17d5066a40e1b
