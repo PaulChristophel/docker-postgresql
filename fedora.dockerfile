@@ -50,6 +50,7 @@ RUN build_packages="\
       pam-devel \
       perl \
       readline-devel \
+      shadow-utils \
       tzdata \
       wget \
       xz \
