@@ -1,15 +1,15 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ClusterImageCatalog
 metadata:
-  name: postgresql-standard-rocky10-preview
+  name: postgresql-standard-azure4-preview
   labels:
     images.cnpg.io/family: postgresql
     images.cnpg.io/type: standard
-    images.cnpg.io/os: rocky10
+    images.cnpg.io/os: azure4
     images.cnpg.io/date: "20260901"
     images.cnpg.io/publisher: docker.io
     images.cnpg.io/channel: preview
 spec:
   images:
     - major: 19
-      image: docker.io/pcm0/postgres@sha256:929685f5d6596a16ad5869455b702e72c06b120279ea7b745dcd176268fd8d01
+      image: docker.io/pcm0/postgres@sha256:d7aa6b7ab61549fc287bbbea0b6868e71e70c87ffccf587c056fedc72e9cbbee
