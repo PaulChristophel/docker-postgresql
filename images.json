@@ -24,6 +24,11 @@
       "perl": "5.44",
       "tcl": "9.0"
     },
+    "fedora46": {
+      "python": "3.15",
+      "perl": "5.44",
+      "tcl": "9.0"
+    },
     "rocky10": {
       "python": "3.12",
       "perl": "5.40",
@@ -38,6 +43,11 @@
       "python": "3.12",
       "perl": "5.38",
       "tcl": "8.6"
+    },
+    "tumbleweed": {
+      "python": "3.13",
+      "perl": "5.26",
+      "tcl": "8.6"
     }
   },
   "distributions": {
@@ -49,12 +59,17 @@
     "fedora44": {
       "name": "fedora",
       "version": "44",
-      "base": "docker.io/fedora:44@sha256:6c75d5bf57cb0fa5aa4b92c6a83c86c791644496d9ac230de7711f5b8ec3b898"
+      "base": "docker.io/fedora:44@sha256:43b29f65a41eb9c35e1cd5323e3bdf3b655c2357a9f4f1ff2f9c2798e5045d80"
     },
     "fedora45": {
       "name": "fedora",
       "version": "45",
-      "base": "docker.io/fedora:45@sha256:0c1f63ed8fb818fad16cf6ae091598c410a21d2e1a9adf183beb93189299bfba"
+      "base": "docker.io/fedora:45@sha256:aacbc26b38361ba0cb3d10f268da40b61b36aed6ed6fe5831a35871636bedb06"
+    },
+    "fedora46": {
+      "name": "fedora",
+      "version": "46",
+      "base": "docker.io/fedora:46@sha256:a9bab18d01cf2c2cf62f3e79c72623405bce14ac062995cc6651a3073c802e41"
     },
     "rocky10": {
       "name": "rockylinux",
@@ -69,7 +84,12 @@
     "azure3": {
       "name": "azurelinux",
       "version": "3.0",
-      "base": "mcr.microsoft.com/azurelinux/base/core:3.0@sha256:8bb51342bd5eba915990ab608f91060d502bb7891a2d3d909e0419b932533029"
+      "base": "mcr.microsoft.com/azurelinux/base/core:3.0@sha256:daa1142fc6b44e27c8112ec6b4c2d579ddb9bc6b3747504e666010a45a51faa4"
+    },
+    "tumbleweed": {
+      "name": "tumbleweed",
+      "version": "20260830",
+      "base": "docker.io/opensuse/tumbleweed:latest@sha256:8f6397b7b7ebc78e111d9a13fb2b157664ad5524e1f3b908deb45938b3095045"
     }
   },
   "postgresql": [
@@ -158,6 +178,12 @@
     },
     {
       "dockerfile": "fedora.dockerfile",
+      "tag": "standard-fedora46",
+      "os": "fedora46",
+      "untrusted": false
+    },
+    {
+      "dockerfile": "fedora.dockerfile",
       "tag": "standard-fedora44-untrusted",
       "os": "fedora44",
       "untrusted": true
@@ -166,6 +192,12 @@
       "dockerfile": "fedora.dockerfile",
       "tag": "standard-fedora45-untrusted",
       "os": "fedora45",
+      "untrusted": true
+    },
+    {
+      "dockerfile": "fedora.dockerfile",
+      "tag": "standard-fedora46-untrusted",
+      "os": "fedora46",
       "untrusted": true
     },
     {
@@ -202,6 +234,18 @@
       "dockerfile": "azurelinux.dockerfile",
       "tag": "standard-azure3-untrusted",
       "os": "azure3",
+      "untrusted": true
+    },
+    {
+      "dockerfile": "tumbleweed.dockerfile",
+      "tag": "standard-tumbleweed",
+      "os": "tumbleweed",
+      "untrusted": false
+    },
+    {
+      "dockerfile": "tumbleweed.dockerfile",
+      "tag": "standard-tumbleweed-untrusted",
+      "os": "tumbleweed",
       "untrusted": true
     }
   ]
