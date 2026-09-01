@@ -188,6 +188,7 @@ RUN tdnf install -y \
 FROM $BASE AS runtime-builder
 ARG PG_MAJOR=18
 ARG WITH_UNTRUSTED_LANGUAGES=false
+ARG IMAGE_DISTRIBUTION_VERSION=unknown
 
 USER root
 RUN runtime_packages="\
@@ -217,9 +218,9 @@ RUN runtime_packages="\
       runtime_packages="${runtime_packages} curl-libs liburing"; \
     fi \
  && mkdir -p /mnt/rootfs \
- && tdnf --installroot /mnt/rootfs --releasever 3.0 install -y ${runtime_packages} \
- && tdnf --installroot /mnt/rootfs --releasever 3.0 upgrade -y \
- && tdnf --installroot /mnt/rootfs --releasever 3.0 clean all \
+ && tdnf --installroot /mnt/rootfs --releasever ${IMAGE_DISTRIBUTION_VERSION} install -y ${runtime_packages} \
+ && tdnf --installroot /mnt/rootfs --releasever ${IMAGE_DISTRIBUTION_VERSION} upgrade -y \
+ && tdnf --installroot /mnt/rootfs --releasever ${IMAGE_DISTRIBUTION_VERSION} clean all \
  && rm -rf /mnt/rootfs/var/cache/tdnf
 
 

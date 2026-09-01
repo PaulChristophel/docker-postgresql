@@ -191,6 +191,7 @@ RUN dnf install -y \
 FROM $BUILD_BASE AS runtime-builder
 ARG PG_MAJOR=18
 ARG WITH_UNTRUSTED_LANGUAGES=false
+ARG IMAGE_DISTRIBUTION_VERSION=unknown
 
 USER root
 RUN runtime_packages="\
@@ -222,12 +223,12 @@ RUN runtime_packages="\
  && mkdir -p /mnt/rootfs \
  && dnf install -y \
       --installroot=/mnt/rootfs \
-      --releasever=10 \
+      --releasever=${IMAGE_DISTRIBUTION_VERSION} \
       --setopt=install_weak_deps=False \
       ${runtime_packages} \
  && dnf upgrade -y \
       --installroot=/mnt/rootfs \
-      --releasever=10 \
+      --releasever=${IMAGE_DISTRIBUTION_VERSION} \
       --setopt=install_weak_deps=False \
  && dnf clean all --installroot=/mnt/rootfs \
  && rm -rf /mnt/rootfs/var/cache/dnf

@@ -44,6 +44,11 @@
       "perl": "5.38",
       "tcl": "8.6"
     },
+    "azure4": {
+      "python": "3.14",
+      "perl": "5.42",
+      "tcl": "9.0"
+    },
     "tumbleweed": {
       "python": "3.13",
       "perl": "5.44",
@@ -85,6 +90,11 @@
       "name": "azurelinux",
       "version": "3.0",
       "base": "mcr.microsoft.com/azurelinux/base/core:3.0@sha256:daa1142fc6b44e27c8112ec6b4c2d579ddb9bc6b3747504e666010a45a51faa4"
+    },
+    "azure4": {
+      "name": "azurelinux",
+      "version": "4.0",
+      "base": "mcr.microsoft.com/azurelinux/base/core:4.0@sha256:sha256:63ef5dda2fb5681ae3aa5c9597a8c4b24364da91ec459b419fa3c38160595fae"
     },
     "tumbleweed": {
       "name": "tumbleweed",
@@ -234,6 +244,18 @@
       "dockerfile": "azurelinux.dockerfile",
       "tag": "standard-azure3-untrusted",
       "os": "azure3",
+      "untrusted": true
+    },
+    {
+      "dockerfile": "azurelinux.dockerfile",
+      "tag": "standard-azure4",
+      "os": "azure4",
+      "untrusted": false
+    },
+    {
+      "dockerfile": "azurelinux.dockerfile",
+      "tag": "standard-azure4-untrusted",
+      "os": "azure4",
       "untrusted": true
     },
     {

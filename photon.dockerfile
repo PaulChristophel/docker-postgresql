@@ -185,6 +185,7 @@ RUN tdnf install -y \
 FROM $BASE AS runtime-builder
 ARG PG_MAJOR=18
 ARG WITH_UNTRUSTED_LANGUAGES=false
+ARG IMAGE_DISTRIBUTION_VERSION=unknown
 
 USER root
 RUN runtime_packages="\
@@ -216,11 +217,11 @@ RUN runtime_packages="\
       runtime_packages="${runtime_packages} curl-libs"; \
     fi \
  && mkdir -p /mnt/rootfs \
- && tdnf -i /mnt/rootfs --releasever=5.0 install -y \
+ && tdnf -i /mnt/rootfs --releasever=${IMAGE_DISTRIBUTION_VERSION} install -y \
       filesystem glibc libselinux coreutils findutils \
- && tdnf -i /mnt/rootfs --releasever=5.0 install -y ${runtime_packages} \
- && tdnf -i /mnt/rootfs --releasever=5.0 upgrade -y \
- && tdnf -i /mnt/rootfs --releasever=5.0 clean all \
+ && tdnf -i /mnt/rootfs --releasever=${IMAGE_DISTRIBUTION_VERSION} install -y ${runtime_packages} \
+ && tdnf -i /mnt/rootfs --releasever=${IMAGE_DISTRIBUTION_VERSION} upgrade -y \
+ && tdnf -i /mnt/rootfs --releasever=${IMAGE_DISTRIBUTION_VERSION} clean all \
  && rm -rf /mnt/rootfs/var/cache/tdnf
 
 
