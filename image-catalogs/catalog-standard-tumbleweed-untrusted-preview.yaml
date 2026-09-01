@@ -1,11 +1,11 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ClusterImageCatalog
 metadata:
-  name: postgresql-standard-photon5-untrusted-preview
+  name: postgresql-standard-tumbleweed-untrusted-preview
   labels:
     images.cnpg.io/family: postgresql
     images.cnpg.io/type: standard
-    images.cnpg.io/os: photon5
+    images.cnpg.io/os: tumbleweed
     images.cnpg.io/date: "20260901"
     images.cnpg.io/publisher: docker.io
     images.cnpg.io/languages: untrusted
@@ -13,4 +13,4 @@ metadata:
 spec:
   images:
     - major: 19
-      image: docker.io/pcm0/postgres@sha256:421880017b6586aa176a24308d5002193c288024583982edda488100c672835a
+      image: docker.io/pcm0/postgres@sha256:246562d8d4cb17348947bfd572d9f46bedb350c8460aa1419d3836d12440d1ff

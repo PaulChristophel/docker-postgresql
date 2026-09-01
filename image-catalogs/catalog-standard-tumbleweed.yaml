@@ -1,0 +1,22 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ClusterImageCatalog
+metadata:
+  name: postgresql-standard-tumbleweed
+  labels:
+    images.cnpg.io/family: postgresql
+    images.cnpg.io/type: standard
+    images.cnpg.io/os: tumbleweed
+    images.cnpg.io/date: "20260901"
+    images.cnpg.io/publisher: docker.io
+spec:
+  images:
+    - major: 14
+      image: docker.io/pcm0/postgres@sha256:2d1fe4a9ddc6b8f13c92d408da57293e8536d4932ed2c48a496849e9f218ec8a
+    - major: 15
+      image: docker.io/pcm0/postgres@sha256:4411a71fcc283eca045c08afafd0dea33d8277dd35b37c950f5052214e1ece09
+    - major: 16
+      image: docker.io/pcm0/postgres@sha256:9aa7dcf9cf80816ca0954c1faece5bd3edd74b61dd8b58c1e647f5eeb8ad2e6a
+    - major: 17
+      image: docker.io/pcm0/postgres@sha256:8e9c245ed6e29d863ed75113048d82f7cd63960de22dc3e504493e9f3a9d1f62
+    - major: 18
+      image: docker.io/pcm0/postgres@sha256:0b25fd920bfb50d6cd55af066c7122bd02b11d53858ce2bea68aa07ec78958dd
