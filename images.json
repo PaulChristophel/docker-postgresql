@@ -94,7 +94,7 @@
     "azure4": {
       "name": "azurelinux",
       "version": "4.0",
-      "base": "mcr.microsoft.com/azurelinux/base/core:4.0@sha256:sha256:63ef5dda2fb5681ae3aa5c9597a8c4b24364da91ec459b419fa3c38160595fae"
+      "base": "mcr.microsoft.com/azurelinux/base/core:4.0@sha256:63ef5dda2fb5681ae3aa5c9597a8c4b24364da91ec459b419fa3c38160595fae"
     },
     "tumbleweed": {
       "name": "tumbleweed",
