@@ -86,7 +86,7 @@ WORKDIR /tmp/postgresql-src
 RUN configure_untrusted="" \
  && configure_modern="" \
  && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
-      configure_untrusted="--with-perl --with-python --with-tcl"; \
+      configure_untrusted="--with-perl --with-python --with-tcl --with-tclconfig=/usr/lib64"; \
     fi \
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
       configure_modern="--with-libcurl"; \
@@ -311,9 +311,18 @@ RUN chown -R root:root /usr/pgsql/${PG_MAJOR} \
         test ! -e "/usr/pgsql/${PG_MAJOR}/share/extension/${extension}.control"; \
       done; \
     else \
-      python3 --version 2>&1 | grep -q "^Python ${PYTHON_VERSION}\\."; \
-      perl -e 'printf "%vd\\n", $^V' | grep -q "^${PERL_VERSION}\\."; \
-      echo 'puts [info patchlevel]' | tclsh | grep -q "^${TCL_VERSION}\\."; \
+      case "$(python3 --version 2>&1)" in \
+        "Python ${PYTHON_VERSION}."*) ;; \
+        *) echo "unexpected Python version" >&2; exit 1 ;; \
+      esac; \
+      case "$(perl -e 'printf "%vd", $^V')" in \
+        "${PERL_VERSION}."*) ;; \
+        *) echo "unexpected Perl version" >&2; exit 1 ;; \
+      esac; \
+      case "$(echo 'puts [info patchlevel]' | tclsh)" in \
+        "${TCL_VERSION}."*) ;; \
+        *) echo "unexpected Tcl version" >&2; exit 1 ;; \
+      esac; \
     fi
 ENV PATH=/usr/pgsql/${PG_MAJOR}/bin:$PATH
 USER postgres
@@ -323,7 +332,10 @@ RUN postgres --version \
  && pg_config --configure \
  && test -e /usr/share/zoneinfo/UTC \
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
-      pg_config --configure | grep -q -- '--with-libcurl'; \
+      case "$(pg_config --configure)" in \
+        *--with-libcurl*) ;; \
+        *) echo "PostgreSQL was built without libcurl support" >&2; exit 1 ;; \
+      esac; \
       set -- /usr/pgsql/${PG_MAJOR}/lib/libpq-oauth*; test -e "$1"; \
     fi \
  && mkdir /tmp/pg-smoke-socket \
