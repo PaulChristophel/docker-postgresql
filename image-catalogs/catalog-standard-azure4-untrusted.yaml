@@ -1,0 +1,23 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ClusterImageCatalog
+metadata:
+  name: postgresql-standard-azure4-untrusted
+  labels:
+    images.cnpg.io/family: postgresql
+    images.cnpg.io/type: standard
+    images.cnpg.io/os: azure4
+    images.cnpg.io/date: "20260901"
+    images.cnpg.io/publisher: docker.io
+    images.cnpg.io/languages: untrusted
+spec:
+  images:
+    - major: 14
+      image: docker.io/pcm0/postgres@sha256:8710fb73dab180fb943bf7df0b337090e2240d78200d16d70a8452bf7f1336cd
+    - major: 15
+      image: docker.io/pcm0/postgres@sha256:7a97cae2c436111a773206ab64f041fbdb268a0a63b3e277a71ae3611c93521f
+    - major: 16
+      image: docker.io/pcm0/postgres@sha256:dd43295d8070f489b57e1307411edc1f8d610e3b35bc0a8bd4e715ec19e5903c
+    - major: 17
+      image: docker.io/pcm0/postgres@sha256:0cec5dd7dd9f63bdfc91287c4928a64de2eca1f2b58b6d149e91e65a1dcc364d
+    - major: 18
+      image: docker.io/pcm0/postgres@sha256:fb36cc47579101f9d1a5c8376b48fd224864fc68030f5ca86093cbe3895e2f33
