@@ -201,6 +201,7 @@ RUN runtime_packages="\
       llvm-libs \
       lz4-libs \
       openldap \
+      openssl \
       openssl-libs \
       readline \
       shadow-utils \
