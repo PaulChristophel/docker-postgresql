@@ -1,9 +1,9 @@
 {
   "image": "docker.io/pcm0/postgres",
   "defaults": {
-    "pg_cron_version": "1.6.7",
-    "pg_cron_commit": "465b38c737f584d520229f5a1d69d1d44649e4e5",
-    "pg_cron_sha256": "ab41d388d845c05ab6f34fa8e12011da2d71f7f562194ee105a6fdecb506a70f",
+    "pg_cron_version": "1.6.8",
+    "pg_cron_commit": "5cedfa472ccc83567aa23ec645925ed8489a7797",
+    "pg_cron_sha256": "cba185da9308d2c624ded35a596937ce391badd60665ab6badc55bd8e78a1e94",
     "pgvector_version": "0.8.6",
     "pgvector_commit": "8ee86c96f0fd72390f890aa8a336fda6d3ab4c6c",
     "pgvector_sha256": "d076a3098010905fd60256649327809651f6288327db6413f0938305f62ea299"
