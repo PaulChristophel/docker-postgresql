@@ -50,7 +50,7 @@
       "tcl": "9.0"
     },
     "tumbleweed": {
-      "python": "3.13",
+      "python": "3.14",
       "perl": "5.44",
       "tcl": "8.6"
     }
