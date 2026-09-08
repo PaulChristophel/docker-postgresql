@@ -213,7 +213,7 @@ RUN runtime_packages="\
       libz1 \
       libzstd1" \
  && if [ "${WITH_UNTRUSTED_LANGUAGES}" = "true" ]; then \
-      runtime_packages="${runtime_packages} perl python314 tcl"; \
+      runtime_packages="${runtime_packages} perl python3 tcl"; \
     fi \
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
       runtime_packages="${runtime_packages} libcurl4"; \
