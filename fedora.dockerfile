@@ -62,6 +62,7 @@ RUN build_packages="\
  && if [ "${PG_MAJOR}" -ge 18 ]; then \
       build_packages="${build_packages} libcurl-devel liburing-devel"; \
     fi \
+ && dnf upgrade -y \
  && dnf install -y ${build_packages} \
  && wget -O /tmp/postgresql.tar.bz2 https://ftp.postgresql.org/pub/source/v${PG_VERSION}/postgresql-${PG_VERSION}.tar.bz2 \
  && echo "${PG_SHA256}  /tmp/postgresql.tar.bz2" | sha256sum -c - \
@@ -216,6 +217,7 @@ RUN runtime_packages="\
       runtime_packages="${runtime_packages} libcurl-minimal liburing"; \
     fi \
  && mkdir -p /mnt/rootfs \
+ && dnf upgrade -y \
  && dnf install -y \
       --installroot=/mnt/rootfs \
       --releasever=${IMAGE_DISTRIBUTION_VERSION} \
