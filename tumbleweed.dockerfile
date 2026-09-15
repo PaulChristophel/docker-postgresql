@@ -1,6 +1,6 @@
 # Containerfile.cnpg-postgresql-source
 
-ARG BASE=docker.io/opensuse/tumbleweed:latest@sha256:8f6397b7b7ebc78e111d9a13fb2b157664ad5524e1f3b908deb45938b3095045
+ARG BASE=docker.io/opensuse/tumbleweed:latest@sha256:a695c4524c31a343eec3061bd65e127d205d50631de6213ea4c0ffbea2f73244
 ARG IMAGE_TITLE="CloudNativePG PostgreSQL on openSUSE Tumbleweed"
 ARG IMAGE_DESCRIPTION="PostgreSQL built from upstream source on openSUSE Tumbleweed for CloudNativePG."
 ARG IMAGE_AUTHORS="Paul Christophel <pmartin@gatech.edu>"
