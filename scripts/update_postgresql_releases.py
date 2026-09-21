@@ -6,6 +6,7 @@ import hashlib
 import json
 import re
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 from urllib.error import HTTPError, URLError
@@ -276,6 +277,24 @@ def update_base_images(config: dict[str, Any]) -> list[str]:
     return changes
 
 
+def update_tumbleweed_version(config: dict[str, Any]) -> list[str]:
+    """Stamp the Tumbleweed rolling snapshot with the current UTC date.
+
+    Args:
+        config: Parsed images configuration.
+
+    Returns:
+        A human-readable description when the snapshot date changed.
+    """
+    tumbleweed = config["distributions"]["tumbleweed"]
+    today = datetime.now(timezone.utc).strftime("%Y%m%d")
+    if tumbleweed["version"] == today:
+        return []
+    old_version = tumbleweed["version"]
+    tumbleweed["version"] = today
+    return [f"tumbleweed: {old_version} -> {today}"]
+
+
 def main() -> int:
     """Run the PostgreSQL release updater.
 
@@ -289,6 +308,7 @@ def main() -> int:
     config = json.loads(args.config.read_text(encoding="utf-8"))
     changes = update_releases(config, available_versions(fetch_text(SOURCE_INDEX_URL)))
     changes.extend(update_base_images(config))
+    changes.extend(update_tumbleweed_version(config))
     if not changes:
         print("images.json already contains the latest stable PostgreSQL releases")
         return 0

@@ -2,7 +2,7 @@ name: Update PostgreSQL image configuration
 
 on:
   schedule:
-    - cron: "43 6 * * 0"
+    - cron: "43 6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -25,6 +25,7 @@ jobs:
         run: python3 scripts/update_postgresql_releases.py
 
       - name: Create configuration update pull request
+        id: create-pr
         uses: peter-evans/create-pull-request@v8
         with:
           add-paths: images.json
@@ -34,8 +35,23 @@ jobs:
           body: |
             Updates stable PostgreSQL release versions and their official
             source-archive SHA-256 pins, plus every configured OCI base-image
-            digest, in `images.json`.
+            digest. Tumbleweed's rolling snapshot date is stamped with the
+            current UTC date, in `images.json`.
 
             Preview releases and extension revisions are intentionally managed
             separately because they have distinct compatibility policies.
           delete-branch: true
+
+      - name: Approve and enable automatic merge
+        if: steps.create-pr.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ secrets.PR_APPROVER_TOKEN }}
+          PR_NUMBER: ${{ steps.create-pr.outputs.pull-request-number }}
+        run: |
+          gh pr review "$PR_NUMBER" \
+            --repo "$GITHUB_REPOSITORY" \
+            --approve
+          gh pr merge "$PR_NUMBER" \
+            --repo "$GITHUB_REPOSITORY" \
+            --squash \
+            --auto
