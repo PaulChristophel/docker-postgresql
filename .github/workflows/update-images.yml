@@ -1,0 +1,41 @@
+name: Update PostgreSQL image configuration
+
+on:
+  schedule:
+    - cron: "43 6 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-postgresql-image-configuration
+  cancel-in-progress: false
+
+jobs:
+  update-postgresql-releases:
+    name: Update stable PostgreSQL releases
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Update PostgreSQL source releases and checksums
+        run: python3 scripts/update_postgresql_releases.py
+
+      - name: Create configuration update pull request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: images.json
+          branch: automation/update-postgresql-releases
+          commit-message: "chore: update PostgreSQL source releases"
+          title: "chore: update PostgreSQL source releases"
+          body: |
+            Updates stable PostgreSQL release versions and their official
+            source-archive SHA-256 pins in `images.json`.
+
+            Preview releases, extension revisions, and base-image digests are
+            intentionally managed separately because they have distinct
+            compatibility and provenance policies.
+          delete-branch: true
