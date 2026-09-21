@@ -21,7 +21,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
 
-      - name: Update PostgreSQL source releases and checksums
+      - name: Update PostgreSQL source releases, checksums, and base images
         run: python3 scripts/update_postgresql_releases.py
 
       - name: Create configuration update pull request
@@ -33,9 +33,9 @@ jobs:
           title: "chore: update PostgreSQL source releases"
           body: |
             Updates stable PostgreSQL release versions and their official
-            source-archive SHA-256 pins in `images.json`.
+            source-archive SHA-256 pins, plus every configured OCI base-image
+            digest, in `images.json`.
 
-            Preview releases, extension revisions, and base-image digests are
-            intentionally managed separately because they have distinct
-            compatibility and provenance policies.
+            Preview releases and extension revisions are intentionally managed
+            separately because they have distinct compatibility policies.
           delete-branch: true
