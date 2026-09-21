@@ -99,7 +99,7 @@
     "tumbleweed": {
       "name": "tumbleweed",
       "version": "20260914",
-      "base": "docker.io/opensuse/tumbleweed:latest@sha256:a695c4524c31a343eec3061bd65e127d205d50631de6213ea4c0ffbea2f73244"
+      "base": "docker.io/opensuse/tumbleweed:latest@sha256:1dafc5a642242268bcd8f7e4f7e7d2531b73fd724328497e5ec97492b1c31914"
     }
   },
   "postgresql": [
