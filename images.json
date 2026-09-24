@@ -98,8 +98,8 @@
     },
     "tumbleweed": {
       "name": "tumbleweed",
-      "version": "20260923",
-      "base": "docker.io/opensuse/tumbleweed:latest@sha256:4a2d9146d8565555a85d212f36009b1631ef63bbe1bf2eaf2c9f5b666f661e31"
+      "version": "20260924",
+      "base": "docker.io/opensuse/tumbleweed:latest@sha256:8314fab3a6d06043c01f70c380bb7e852ad588cfaed626756efd25d8d9b5b3ef"
     }
   },
   "postgresql": [
