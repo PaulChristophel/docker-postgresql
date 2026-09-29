@@ -152,12 +152,9 @@
       "major": 19,
       "version": "19beta4",
       "sha256": "83157ee9c599d03b2f7a3d73ef3a56ec24e0e79cc2b3501a64d1364f56398c86",
-      "pg_cron_version": "1.6.7+git.c7609cce",
-      "pg_cron_commit": "c7609cce5c9f5fd8bcbab536cef08803a38bf6c1",
-      "pg_cron_sha256": "f566a711199227715f871eebd21abea744bf9510d041ede7e86c1916bbaa8826",
       "pgaudit_version": "19.0",
-      "pgaudit_commit": "52a32536711514467d0481f42c87c5ba700a3504",
-      "pgaudit_sha256": "40e95407ee284cfaa6926039eb9054908ef324be3a4403ab8682d7fc18b7c929",
+      "pgaudit_commit": "1276f0b0d44f9ef72954be94cc30714b7678136a",
+      "pgaudit_sha256": "856e04dc7fcb5f63a6f18c093962a2810826a3b588ceab6d3ca352d99705794c",
       "channel": "preview"
     }
   ],
