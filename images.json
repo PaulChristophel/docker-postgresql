@@ -89,7 +89,7 @@
     "azure3": {
       "name": "azurelinux",
       "version": "3.0",
-      "base": "mcr.microsoft.com/azurelinux/base/core:3.0@sha256:34a22db497ff34a0f35ca5fc54bd38711d04238a2c1b2f65d35dc9d45dd82584"
+      "base": "mcr.microsoft.com/azurelinux/base/core:3.0@sha256:1324a2cf7ed34e5f48a1022816b205782b86c7305651658e611dcd3d30756751"
     },
     "azure4": {
       "name": "azurelinux",
@@ -98,8 +98,8 @@
     },
     "tumbleweed": {
       "name": "tumbleweed",
-      "version": "20260930",
-      "base": "docker.io/opensuse/tumbleweed:latest@sha256:24dd2916ee8976da70fab5410d913958042cd20b2013b5f474d737e7a92d0dbb"
+      "version": "20261002",
+      "base": "docker.io/opensuse/tumbleweed:latest@sha256:c6fa2cc8154cb760cd7323cc6bcd79b1e2defab8a128feb8b212f142a461c123"
     }
   },
   "postgresql": [
