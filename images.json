@@ -79,12 +79,12 @@
     "rocky10": {
       "name": "rockylinux",
       "version": "10",
-      "base": "docker.io/rockylinux/rockylinux:10-ubi-micro@sha256:187d27b1e4d4305bac2a965fe1cb2de29f2fa85f93bcd60af55daf1a697f19ae"
+      "base": "docker.io/rockylinux/rockylinux:10-ubi-micro@sha256:8376023a3cfef017584ea52c94b18277296cd4b110886c04360f9b9a3e9c08a3"
     },
     "alma10": {
       "name": "almalinux-kitten",
       "version": "10",
-      "base": "docker.io/almalinux:10-kitten-minimal@sha256:7c29735616ccbae292729a085fea97fb51779e499655b75accfb5e7c81ad57d6"
+      "base": "docker.io/almalinux:10-kitten-minimal@sha256:febdb13b57651a5bfe1f450aa786986e96e60851b52663d30bf0dc28b0675af1"
     },
     "azure3": {
       "name": "azurelinux",
@@ -98,8 +98,8 @@
     },
     "tumbleweed": {
       "name": "tumbleweed",
-      "version": "20261002",
-      "base": "docker.io/opensuse/tumbleweed:latest@sha256:c6fa2cc8154cb760cd7323cc6bcd79b1e2defab8a128feb8b212f142a461c123"
+      "version": "20261003",
+      "base": "docker.io/opensuse/tumbleweed:latest@sha256:102356d2e023b11f483110f332588d614d805e4a4d8b7f1d53163fa47dbd3d6e"
     }
   },
   "postgresql": [
