@@ -79,7 +79,7 @@
     "rocky10": {
       "name": "rockylinux",
       "version": "10",
-      "base": "docker.io/rockylinux/rockylinux:10-ubi-micro@sha256:b3db63f0bce0957421dcc3349103bfec4f9a18bb6505baea6f90f274beb4f158"
+      "base": "docker.io/rockylinux/rockylinux:10-ubi-micro@sha256:b512b2de6a4f2f71594add187d0771370f724c1466dac74e275eba9dd5d9f7e3"
     },
     "alma10": {
       "name": "almalinux-kitten",
@@ -98,8 +98,8 @@
     },
     "tumbleweed": {
       "name": "tumbleweed",
-      "version": "20261017",
-      "base": "docker.io/opensuse/tumbleweed:latest@sha256:87320628e72328e23620f5d9ee319edf7d8f902703689dd72ad374fb74630dfa"
+      "version": "20261018",
+      "base": "docker.io/opensuse/tumbleweed:latest@sha256:827ed38987d33001a7e41f70ae4a1046d7f25754043669680213804c4db532a0"
     }
   },
   "postgresql": [
