@@ -12,4 +12,4 @@ metadata:
 spec:
   images:
     - major: 19
-      image: docker.io/pcm0/postgres@sha256:fa6793a9c21fe7cebfc9a0a3f4f05185cc4b4471c19aef84688f6eed61632287
+      image: docker.io/pcm0/postgres@sha256:c419898451605d2e73beb9b4023dca71a71aeaafb21c0c0eaf199502a5a5ddbe
