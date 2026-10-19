@@ -4,9 +4,9 @@
     "pg_cron_version": "1.6.8",
     "pg_cron_commit": "5cedfa472ccc83567aa23ec645925ed8489a7797",
     "pg_cron_sha256": "cba185da9308d2c624ded35a596937ce391badd60665ab6badc55bd8e78a1e94",
-    "pgvector_version": "0.8.6",
-    "pgvector_commit": "8ee86c96f0fd72390f890aa8a336fda6d3ab4c6c",
-    "pgvector_sha256": "d076a3098010905fd60256649327809651f6288327db6413f0938305f62ea299"
+    "pgvector_version": "0.8.7",
+    "pgvector_commit": "f37c13f68b57d2c3472b2214fbcff699d6d34876",
+    "pgvector_sha256": "83d673c3b287cddbf3879f86215f043f2c2b56c69d37b2a77504910db1ed6e56"
   },
   "language_versions": {
     "photon5": {

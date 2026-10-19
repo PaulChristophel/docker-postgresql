@@ -132,7 +132,7 @@ cluster requires Perl, Python, or Tcl untrusted procedural languages.
 
 The Dockerfiles accept the same build arguments used by the release workflow.
 Their defaults currently build PostgreSQL 18.4 with pg_cron 1.6.7, pgvector
-0.8.6, and pgAudit 18.0. For a local Photon build using those defaults:
+0.8.7, and pgAudit 18.0. For a local Photon build using those defaults:
 
 ```sh
 /opt/homebrew/bin/podman build \
