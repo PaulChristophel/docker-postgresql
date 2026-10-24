@@ -59,7 +59,7 @@
     "photon5": {
       "name": "photon",
       "version": "5.0",
-      "base": "docker.io/photon:5.0@sha256:ab4b68e15c8ff6b9c79ba525f696260f772c711761d576dd53bf43c351c9a504"
+      "base": "docker.io/photon:5.0@sha256:3d7e9a35fd55277a056d9e1c54841e6b862a8df7e0caa56fa9c0453969f5329d"
     },
     "fedora44": {
       "name": "fedora",
@@ -98,8 +98,8 @@
     },
     "tumbleweed": {
       "name": "tumbleweed",
-      "version": "20261023",
-      "base": "docker.io/opensuse/tumbleweed:latest@sha256:0c6f00841281acf55a8ef29e777fc2db40d0923289ba933d566542cff2cddc00"
+      "version": "20261024",
+      "base": "docker.io/opensuse/tumbleweed:latest@sha256:dd9dd83d48156b3c1acbdb2760e1031cfea5238f9f762a4e24db7061e651afae"
     }
   },
   "postgresql": [
