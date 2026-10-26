@@ -43,7 +43,7 @@ The release workflow currently builds 60 images: six PostgreSQL release lines
 across five operating systems, each with standard and untrusted variants.
 
 - PostgreSQL 14 through 18 are published through the stable catalogs.
-- PostgreSQL 19 beta releases are published through separate preview catalogs.
+- PostgreSQL 19 prereleases are published through separate preview catalogs.
 - Each OS has a standard variant and a corresponding `-untrusted` variant.
 - Images currently target `linux/amd64`.
 

@@ -1,7 +1,7 @@
 # Containerfile.cnpg-postgresql-source
 
-ARG BASE=docker.io/almalinux:10-kitten-minimal@sha256:515a829404b2b5d25d0da6f6c8359bcc83d54974c9ce829a8854ac3f792a20ed
-ARG BUILD_BASE=docker.io/almalinux:10-kitten@sha256:95deefe15f77c78b69fcece224a040a6f726ea4c3bc30cf254a0655795136042
+ARG BASE=docker.io/almalinux:10-kitten-minimal@sha256:482ebbd308f144d8d509834a79c29b5f7c031b9b987339372c6dd65213806c2e
+ARG BUILD_BASE=docker.io/almalinux:10-kitten@sha256:e6509c21c3c99e24d97ad3a3c3f16c757f10ec397f79f40568c1bb010d916f21
 ARG IMAGE_TITLE="CloudNativePG PostgreSQL on AlmaLinux"
 ARG IMAGE_DESCRIPTION="PostgreSQL built from upstream source on AlmaLinux for CloudNativePG."
 ARG IMAGE_AUTHORS="Paul Christophel <pmartin@gatech.edu>"
@@ -237,7 +237,7 @@ RUN runtime_packages="\
 FROM scratch
 ARG BASE
 ARG PG_MAJOR=18
-ARG PG_VERSION=18.4
+ARG PG_VERSION=18.6
 ARG WITH_UNTRUSTED_LANGUAGES=false
 ARG PYTHON_VERSION=not-installed
 ARG PERL_VERSION=not-installed

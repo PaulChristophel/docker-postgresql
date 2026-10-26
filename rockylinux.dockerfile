@@ -1,6 +1,6 @@
 # Containerfile.cnpg-postgresql-source
 
-ARG BASE=docker.io/rockylinux/rockylinux:10-ubi-micro@sha256:187d27b1e4d4305bac2a965fe1cb2de29f2fa85f93bcd60af55daf1a697f19ae
+ARG BASE=docker.io/rockylinux/rockylinux:10-ubi-micro@sha256:9ccc422dd6c90ad863adb53ed328bbd2de5c63502e8de6715239c0e2caee91ca
 ARG BUILD_BASE=docker.io/rockylinux/rockylinux:10@sha256:827d37bc128288ccf160ee318bb3cb92d591164cb217e92f8bc61e3982ae1834
 ARG IMAGE_TITLE="CloudNativePG PostgreSQL on Rocky Linux"
 ARG IMAGE_DESCRIPTION="PostgreSQL built from upstream source on Rocky Linux for CloudNativePG."
@@ -237,7 +237,7 @@ RUN runtime_packages="\
 FROM scratch
 ARG BASE
 ARG PG_MAJOR=18
-ARG PG_VERSION=18.4
+ARG PG_VERSION=18.6
 ARG WITH_UNTRUSTED_LANGUAGES=false
 ARG PYTHON_VERSION=not-installed
 ARG PERL_VERSION=not-installed

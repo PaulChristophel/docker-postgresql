@@ -1,6 +1,6 @@
 # Containerfile.cnpg-postgresql-source
 
-ARG BASE=mcr.microsoft.com/azurelinux/base/core:3.0@sha256:4ecd6b297db85c54ec2df07145a28536c3655a3e98e54eb2364189bc4e6eac23
+ARG BASE=mcr.microsoft.com/azurelinux/base/core:3.0@sha256:bd88359666e3f20296e7fe639a480dfd3c3c8eba299b21f26e4560353e21a656
 ARG IMAGE_TITLE="CloudNativePG PostgreSQL on Azure Linux"
 ARG IMAGE_DESCRIPTION="PostgreSQL built from upstream source on Azure Linux for CloudNativePG."
 ARG IMAGE_AUTHORS="Paul Christophel <pmartin@gatech.edu>"
@@ -227,7 +227,7 @@ RUN runtime_packages="\
 FROM scratch
 ARG BASE
 ARG PG_MAJOR=18
-ARG PG_VERSION=18.4
+ARG PG_VERSION=18.6
 ARG WITH_UNTRUSTED_LANGUAGES=false
 ARG PYTHON_VERSION=not-installed
 ARG PERL_VERSION=not-installed

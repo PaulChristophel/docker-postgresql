@@ -1,6 +1,6 @@
 # Containerfile.cnpg-postgresql-source
 
-ARG BASE=docker.io/photon:5.0@sha256:ab4b68e15c8ff6b9c79ba525f696260f772c711761d576dd53bf43c351c9a504
+ARG BASE=docker.io/photon:5.0@sha256:3d7e9a35fd55277a056d9e1c54841e6b862a8df7e0caa56fa9c0453969f5329d
 ARG IMAGE_TITLE="CloudNativePG PostgreSQL on Photon"
 ARG IMAGE_DESCRIPTION="PostgreSQL built from upstream source on Photon OS for CloudNativePG."
 ARG IMAGE_AUTHORS="Paul Christophel <pmartin@gatech.edu>"
@@ -228,7 +228,7 @@ RUN runtime_packages="\
 FROM scratch
 ARG BASE
 ARG PG_MAJOR=18
-ARG PG_VERSION=18.4
+ARG PG_VERSION=18.6
 ARG WITH_UNTRUSTED_LANGUAGES=false
 ARG PYTHON_VERSION=not-installed
 ARG PERL_VERSION=not-installed

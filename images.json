@@ -150,8 +150,8 @@
     },
     {
       "major": 19,
-      "version": "19beta4",
-      "sha256": "83157ee9c599d03b2f7a3d73ef3a56ec24e0e79cc2b3501a64d1364f56398c86",
+      "version": "19rc1",
+      "sha256": "af105fc8e960fc836a09fc2cd7f582b49fd17675d9d36631abe3a565bfd7d701",
       "pgaudit_version": "19.0",
       "pgaudit_commit": "1276f0b0d44f9ef72954be94cc30714b7678136a",
       "pgaudit_sha256": "f76bfe53afa2435520b041ccc5d00be21219e1a82015fc5e59bd6d5e0988c4b2",
