@@ -84,7 +84,7 @@
     "alma10": {
       "name": "almalinux-kitten",
       "version": "10",
-      "base": "docker.io/almalinux:10-kitten-minimal@sha256:482ebbd308f144d8d509834a79c29b5f7c031b9b987339372c6dd65213806c2e"
+      "base": "docker.io/almalinux:10-kitten-minimal@sha256:d6a79fcf8a0632181418eebeeca5fbe897ba141dc4e5bd756e8956a4a08e3d93"
     },
     "azure3": {
       "name": "azurelinux",
@@ -98,8 +98,8 @@
     },
     "tumbleweed": {
       "name": "tumbleweed",
-      "version": "20261027",
-      "base": "docker.io/opensuse/tumbleweed:latest@sha256:2e73c9a73aed4edfdd8a383608368a7ee6b8de2a2aa262843c89bb6778c2c24d"
+      "version": "20261028",
+      "base": "docker.io/opensuse/tumbleweed:latest@sha256:216f7358df3fabe995e8acb94343c19afc95875c5572617a4996d70149a5e83a"
     }
   },
   "postgresql": [
