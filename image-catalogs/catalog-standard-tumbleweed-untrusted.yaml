@@ -6,18 +6,18 @@ metadata:
     images.cnpg.io/family: postgresql
     images.cnpg.io/type: standard
     images.cnpg.io/os: tumbleweed
-    images.cnpg.io/date: "20261031"
+    images.cnpg.io/date: "20261101"
     images.cnpg.io/publisher: docker.io
     images.cnpg.io/languages: untrusted
 spec:
   images:
     - major: 14
-      image: docker.io/pcm0/postgres@sha256:c82bfd3629a240372d9033b583462e4bb79566144c5daef11f04e77befe5896e
+      image: docker.io/pcm0/postgres@sha256:506c188d265b058af5fa084b1ffc20d291dc1941028679689d0eb22fbb30b7a2
     - major: 15
-      image: docker.io/pcm0/postgres@sha256:cf9c6d768cec711fac159c96ec7c3bccf0586b17eb274e29ced64d3899768801
+      image: docker.io/pcm0/postgres@sha256:5e3552cafb0837ea5bc94f42098b26eb9f36076755e9a11222f3df76d1d1786f
     - major: 16
-      image: docker.io/pcm0/postgres@sha256:64d762e5ffa29083a7704abaa996988f8428f82e7995942a5352045908757406
+      image: docker.io/pcm0/postgres@sha256:cb8bfbd226e865d307750d2d15b5026a66ab69981f54573457cfad3dbd4bd5cb
     - major: 17
-      image: docker.io/pcm0/postgres@sha256:68b90d4d20fb00f613d185040eb200353273560fcafe031ba60be5b062f9de4d
+      image: docker.io/pcm0/postgres@sha256:5da392d9470c262517cc70a5ed084c2a83d8a1434d23b2e2013e893793ae40c3
     - major: 18
-      image: docker.io/pcm0/postgres@sha256:3b9909331c954320c6e949f251d3711a039e4bb41ae842997d1d47a444fcc7ea
+      image: docker.io/pcm0/postgres@sha256:04d1698e9093f8ccc95eb031073e0593f3078dc44aa99ffc7d60193a7883c2df
