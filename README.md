@@ -16,7 +16,7 @@ toolchains while keeping every resulting image on an operating system that can
 reasonably be maintained.
 
 One way to obtain different GCC versions would be to use consecutive Fedora
-releases—for example, Fedora 44 and Fedora 43. That creates unnecessary
+releases—for example, Fedora 45 and Fedora 46. That creates unnecessary
 maintenance churn: the older Fedora release reaches end of service sooner, so
 the image must be rebased simply to retain operating-system support. Using
 current releases from different distribution families provides compiler,
@@ -25,7 +25,7 @@ useful maintenance horizons.
 
 The current bases are:
 
-- Fedora 44, representing a fast-moving distribution and newer toolchain.
+- Fedora 45 and 46, representing a fast-moving distribution and newer toolchain.
 - Photon OS 5, representing VMware's compact, container-oriented distribution.
 - Rocky Linux 10 and AlmaLinux 10, representing enterprise Linux toolchains
   and lifecycles.
@@ -39,8 +39,8 @@ PostgreSQL feature set and CloudNativePG compatibility.
 
 ## Image matrix
 
-The release workflow currently builds 72 images: four PostgreSQL release lines
-across nine operating-system variants, each with standard and untrusted variants.
+The release workflow currently builds 64 images: four PostgreSQL release lines
+across eight operating-system variants, each with standard and untrusted variants.
 
 - PostgreSQL 16 through 18 are published through the stable catalogs.
 - PostgreSQL 19 prereleases are published through separate preview catalogs.
@@ -87,7 +87,7 @@ Tags combine a PostgreSQL version with the image variant. For example:
 
 ```text
 18.4-standard-photon5
-18-standard-fedora44
+18-standard-fedora45
 18-standard-rocky10-untrusted
 ```
 
