@@ -11,8 +11,6 @@ metadata:
     images.cnpg.io/languages: untrusted
 spec:
   images:
-    - major: 14
-      image: docker.io/pcm0/postgres@sha256:31d81e1ddba36ffbf4d1108c5b21e019f1433e73464ae70cb3b334c41f4168b8
     - major: 15
       image: docker.io/pcm0/postgres@sha256:cd36b1623d15e54fa54249bd9621b12295dba6f7aa1e80376a38110286d6e9c3
     - major: 16
