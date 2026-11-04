@@ -180,18 +180,6 @@
       "untrusted": true
     },
     {
-      "dockerfile": "almalinux.dockerfile",
-      "tag": "standard-alma10",
-      "os": "alma10",
-      "untrusted": false
-    },
-    {
-      "dockerfile": "almalinux.dockerfile",
-      "tag": "standard-alma10-untrusted",
-      "os": "alma10",
-      "untrusted": true
-    },
-    {
       "dockerfile": "azurelinux.dockerfile",
       "tag": "standard-azure3",
       "os": "azure3",
@@ -204,18 +192,6 @@
       "untrusted": true
     },
     {
-      "dockerfile": "fedora.dockerfile",
-      "tag": "standard-azure4",
-      "os": "azure4",
-      "untrusted": false
-    },
-    {
-      "dockerfile": "fedora.dockerfile",
-      "tag": "standard-azure4-untrusted",
-      "os": "azure4",
-      "untrusted": true
-    },
-    {
       "dockerfile": "tumbleweed.dockerfile",
       "tag": "standard-tumbleweed",
       "os": "tumbleweed",
@@ -225,6 +201,32 @@
       "dockerfile": "tumbleweed.dockerfile",
       "tag": "standard-tumbleweed-untrusted",
       "os": "tumbleweed",
+      "untrusted": true
+    }
+  ],
+  "disabled_variants": [
+    {
+      "dockerfile": "almalinux.dockerfile",
+      "tag": "standard-alma10",
+      "os": "alma10",
+      "untrusted": false
+    },
+    {
+      "dockerfile": "almalinux.dockerfile",
+      "tag": "standard-alma10-untrusted",
+      "os": "alma10",
+      "untrusted": true
+    },
+    {
+      "dockerfile": "fedora.dockerfile",
+      "tag": "standard-azure4",
+      "os": "azure4",
+      "untrusted": false
+    },
+    {
+      "dockerfile": "fedora.dockerfile",
+      "tag": "standard-azure4-untrusted",
+      "os": "azure4",
       "untrusted": true
     }
   ]
