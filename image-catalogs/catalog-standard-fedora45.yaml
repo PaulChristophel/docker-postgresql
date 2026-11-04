@@ -6,15 +6,15 @@ metadata:
     images.cnpg.io/family: postgresql
     images.cnpg.io/type: standard
     images.cnpg.io/os: fedora45
-    images.cnpg.io/date: "20261026"
+    images.cnpg.io/date: "20261103"
     images.cnpg.io/publisher: docker.io
 spec:
   images:
     - major: 15
-      image: docker.io/pcm0/postgres@sha256:db33423624a9e7555b4cd05e31bdd0bc8d41cc729cbde1999dbdf2320f4dcdca
+      image: docker.io/pcm0/postgres@sha256:d932fa9151a24f557d0c1db9ece588db24bdae82db607a7d7f00dbade98a062c
     - major: 16
-      image: docker.io/pcm0/postgres@sha256:b8bb49555d87ba0a72e61dab407adf3d788f102e983f5e78ea34473fb4f569e9
+      image: docker.io/pcm0/postgres@sha256:a5b4230f30e8ed7fe8a0a8eb854b3b4dfebe4b5fbaafec8e2449f10dbae3ffc5
     - major: 17
-      image: docker.io/pcm0/postgres@sha256:7a256bb6ead5fc8d5657c9fdb4d86b147499d4869780f2644306937bf589253d
+      image: docker.io/pcm0/postgres@sha256:68577a81a646c10ec926ae0509df765e7ab5ba5f631b5158151e6296b4deb98b
     - major: 18
-      image: docker.io/pcm0/postgres@sha256:bd5c8f3360a403de034d15ab0a3a8f25ecb507ebb37a30beb5ed2f2eda353d10
+      image: docker.io/pcm0/postgres@sha256:73e019a395ecdd275275cba8d65ea4bdd4b48d1dc43c9b77cdc6a0a68d4a5960
