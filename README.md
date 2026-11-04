@@ -39,10 +39,10 @@ PostgreSQL feature set and CloudNativePG compatibility.
 
 ## Image matrix
 
-The release workflow currently builds 90 images: five PostgreSQL release lines
+The release workflow currently builds 72 images: four PostgreSQL release lines
 across nine operating-system variants, each with standard and untrusted variants.
 
-- PostgreSQL 15 through 18 are published through the stable catalogs.
+- PostgreSQL 16 through 18 are published through the stable catalogs.
 - PostgreSQL 19 prereleases are published through separate preview catalogs.
 - Each OS has a standard variant and a corresponding `-untrusted` variant.
 - Images currently target `linux/amd64`.

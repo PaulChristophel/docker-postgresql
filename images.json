@@ -104,15 +104,6 @@
   },
   "postgresql": [
     {
-      "major": 15,
-      "version": "15.19",
-      "sha256": "e1a64a87a46b825b88c082e4518161a47aab53c45694964f8ba1df28f7859f89",
-      "pgaudit_version": "1.7.1",
-      "pgaudit_commit": "72da89c3fa02f3f2b9f3933214d91ad9c3428467",
-      "pgaudit_sha256": "3a27de4da689463ec92a2cc2edaf9d0a8e45fb814bb6d8fa277442d1284d2ba1",
-      "channel": "stable"
-    },
-    {
       "major": 16,
       "version": "16.15",
       "sha256": "c1575341fa7bd40f5274ea465b34390f4dc64cdd0770af327005caaeb9f6b7ed",

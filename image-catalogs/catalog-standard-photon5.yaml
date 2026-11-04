@@ -10,8 +10,6 @@ metadata:
     images.cnpg.io/publisher: docker.io
 spec:
   images:
-    - major: 15
-      image: docker.io/pcm0/postgres@sha256:84e493fce2a3bc98fc36e9855311c801fe7dbf824a8b130d3aaf6269c4161258
     - major: 16
       image: docker.io/pcm0/postgres@sha256:6a6afab7462266d1fa5c4cd922ff4937502c61768204dd0b18bc73d078867d5f
     - major: 17
