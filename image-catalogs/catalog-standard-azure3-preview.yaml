@@ -6,10 +6,10 @@ metadata:
     images.cnpg.io/family: postgresql
     images.cnpg.io/type: standard
     images.cnpg.io/os: azure3
-    images.cnpg.io/date: "20261103"
+    images.cnpg.io/date: "20261104"
     images.cnpg.io/publisher: docker.io
     images.cnpg.io/channel: preview
 spec:
   images:
     - major: 19
-      image: docker.io/pcm0/postgres@sha256:04a261dc14feb16bfc4b0d4efcfb62f00a57fd33b2601d72426d908499586f1d
+      image: docker.io/pcm0/postgres@sha256:73e998285844fec56ac11193141806f22f727e89d1a31827f15da9c5efd71e25
