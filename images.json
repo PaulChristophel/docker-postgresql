@@ -144,30 +144,6 @@
       "untrusted": true
     },
     {
-      "dockerfile": "fedora.dockerfile",
-      "tag": "standard-fedora45",
-      "os": "fedora45",
-      "untrusted": false
-    },
-    {
-      "dockerfile": "fedora.dockerfile",
-      "tag": "standard-fedora46",
-      "os": "fedora46",
-      "untrusted": false
-    },
-    {
-      "dockerfile": "fedora.dockerfile",
-      "tag": "standard-fedora45-untrusted",
-      "os": "fedora45",
-      "untrusted": true
-    },
-    {
-      "dockerfile": "fedora.dockerfile",
-      "tag": "standard-fedora46-untrusted",
-      "os": "fedora46",
-      "untrusted": true
-    },
-    {
       "dockerfile": "rockylinux.dockerfile",
       "tag": "standard-rocky10",
       "os": "rocky10",
@@ -227,6 +203,30 @@
       "dockerfile": "fedora.dockerfile",
       "tag": "standard-azure4-untrusted",
       "os": "azure4",
+      "untrusted": true
+    },
+    {
+      "dockerfile": "fedora.dockerfile",
+      "tag": "standard-fedora45",
+      "os": "fedora45",
+      "untrusted": false
+    },
+    {
+      "dockerfile": "fedora.dockerfile",
+      "tag": "standard-fedora46",
+      "os": "fedora46",
+      "untrusted": false
+    },
+    {
+      "dockerfile": "fedora.dockerfile",
+      "tag": "standard-fedora45-untrusted",
+      "os": "fedora45",
+      "untrusted": true
+    },
+    {
+      "dockerfile": "fedora.dockerfile",
+      "tag": "standard-fedora46-untrusted",
+      "os": "fedora46",
       "untrusted": true
     }
   ]

@@ -25,7 +25,7 @@ useful maintenance horizons.
 
 The current bases are:
 
-- Fedora 45 and 46, representing a fast-moving distribution and newer toolchain.
+- openSUSE Tumbleweed, representing a rolling distribution and newer toolchain.
 - Photon OS 5, representing VMware's compact, container-oriented distribution.
 - Rocky Linux 10, representing enterprise Linux toolchains and lifecycles.
 - Azure Linux 3, representing Microsoft's compact container-focused
@@ -38,8 +38,8 @@ PostgreSQL feature set and CloudNativePG compatibility.
 
 ## Image matrix
 
-The release workflow currently builds 48 images: four PostgreSQL release lines
-across six operating-system variants, each with standard and untrusted variants.
+The release workflow currently builds 32 images: four PostgreSQL release lines
+across four operating-system variants, each with standard and untrusted variants.
 
 - PostgreSQL 16 through 18 are published through the stable catalogs.
 - PostgreSQL 19 prereleases are published through separate preview catalogs.
@@ -47,7 +47,8 @@ across six operating-system variants, each with standard and untrusted variants.
 - Images currently target `linux/amd64`.
 
 Azure Linux 4 builds are paused while its preview base remains stale. AlmaLinux
-Kitten 10 builds are also paused to reduce overlap with Rocky Linux 10. Their
+Kitten 10 builds are also paused to reduce overlap with Rocky Linux 10. Fedora
+45 and 46 builds are paused, retaining Tumbleweed for newer-toolchain coverage. Their
 entries are retained in `images.json` under `disabled_variants`; move them back to
 `variants` to resume builds and catalog generation.
 
@@ -91,7 +92,7 @@ Tags combine a PostgreSQL version with the image variant. For example:
 
 ```text
 18.4-standard-photon5
-18-standard-fedora45
+18-standard-tumbleweed
 18-standard-rocky10-untrusted
 ```
 
