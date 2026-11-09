@@ -6,13 +6,13 @@ metadata:
     images.cnpg.io/family: postgresql
     images.cnpg.io/type: standard
     images.cnpg.io/os: azure3
-    images.cnpg.io/date: "20261107"
+    images.cnpg.io/date: "20261109"
     images.cnpg.io/publisher: docker.io
 spec:
   images:
     - major: 16
-      image: docker.io/pcm0/postgres@sha256:96fe3c5b4aa9c2ccb7e59f84127ac48060f7f6c22b456df33d08811177dd4028
+      image: docker.io/pcm0/postgres@sha256:109826b8334567ee5e5fb48a4b24ec9d753a1cbc58d44af8bf49038f12cab37c
     - major: 17
-      image: docker.io/pcm0/postgres@sha256:6e9d1c2ffb3a7ee4c7b19a488c25be5e175af5bb67dd2a287c2f333ac9bb66dd
+      image: docker.io/pcm0/postgres@sha256:88c979140d50dff0170a105b2f0b2622467e6793d4a060da9d92e6f969f26395
     - major: 18
-      image: docker.io/pcm0/postgres@sha256:562520c25a17a5f9fbde333119b607bca02bd6c7af26f895137234922a0bb4b3
+      image: docker.io/pcm0/postgres@sha256:600ac46e263e6144e5a0a526d1892307106506eb6db9f8ba652fa47443b90e04
