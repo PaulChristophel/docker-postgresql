@@ -89,14 +89,14 @@
     "tumbleweed": {
       "name": "tumbleweed",
       "version": "20261112",
-      "base": "docker.io/opensuse/tumbleweed:latest@sha256:9f4c5b5b7989d296a7df5c41128ffd86800b76a6a4a039f6e343397f1daace68"
+      "base": "docker.io/opensuse/tumbleweed:latest@sha256:0e80488c4e2d1fb91ff07a7264deb4171e0c0884d7d141819f1d0826ac35bc0b"
     }
   },
   "postgresql": [
     {
       "major": 16,
-      "version": "16.15",
-      "sha256": "c1575341fa7bd40f5274ea465b34390f4dc64cdd0770af327005caaeb9f6b7ed",
+      "version": "16.16",
+      "sha256": "9d5cd8633043b75740d5d59749c6b7365e6aeb53c47098b1a5e80bb18f87881a",
       "pgaudit_version": "16.1",
       "pgaudit_commit": "a81792e8a4ea8f7aaf75bd610fcc4c2f96650bdc",
       "pgaudit_sha256": "92e9c932ee0b07cbd041187bed04faae23769b80a0bca89800fcaddbf7131153",
@@ -104,17 +104,17 @@
     },
     {
       "major": 17,
-      "version": "17.11",
-      "sha256": "dd27f2b3c59e73ed14aa3324901242bf69a032a6347805f274e6260322d42979",
+      "version": "17.12",
+      "sha256": "9cf136a703d8ee2f83465c43be4e9e8e7930c82b0bfba13be7e2537be769ac55",
       "pgaudit_version": "17.1",
-      "pgaudit_commit": "266ada37842d9c6d7a0623065cbfe915f2572f74",
-      "pgaudit_sha256": "3c5f72bd54f7a7e1c82a4fd1fdb75cc2cdf61eba4913a579f69071eb42c49331",
+      "pgaudit_commit": "538f89a93d8fd0d8913f3d740cacaea7b7eb66d9",
+      "pgaudit_sha256": "ff3b173ccc78ec05a467499bd508d1c586510446b5f5dd86ed3e4769993d561f",
       "channel": "stable"
     },
     {
       "major": 18,
-      "version": "18.6",
-      "sha256": "555610c24d53e4316da5b7d3fc25c279d96856d5e0e23ee308c328c5fa881d9f",
+      "version": "18.7",
+      "sha256": "441dfae4280cae3e0425e5f876f80559fb0731c140f1aae22b3e5a54d0411bfd",
       "pgaudit_version": "18.0",
       "pgaudit_commit": "f39f8dbb15dc5bd4cbe5f1e5abe0d930ed7593a8",
       "pgaudit_sha256": "bbfc57be090c82b4efd8f8ed7f613e2d8537c38c35f25bb2d1c005d5747ef2e4",
@@ -122,8 +122,8 @@
     },
     {
       "major": 19,
-      "version": "19rc1",
-      "sha256": "af105fc8e960fc836a09fc2cd7f582b49fd17675d9d36631abe3a565bfd7d701",
+      "version": "19rc2",
+      "sha256": "23a7bb862e4bac395c047305ed0084117b01e71255ce858b907cdcd78ce40351",
       "pgaudit_version": "19.0",
       "pgaudit_commit": "2a7322004a90ebb8cf51d929e3dcf79e791b557e",
       "pgaudit_sha256": "7cd6459585ed87d5a9137db00673875633b91b7cd14dd24d591f141b2a4a4140",

@@ -51,15 +51,15 @@ changes.
 For Python changes, format and compile the script:
 
 ```sh
-/Users/pmartin47/Library/Python/3.14/bin/black scripts/generate_catalogs.py
+/Users/pmartin47/Library/Python/3.15/bin/black scripts/generate_catalogs.py
 PYTHONPYCACHEPREFIX=/tmp/docker-postgresql-pycache \
-  /opt/homebrew/bin/python3.14 -m py_compile scripts/generate_catalogs.py
+  /opt/homebrew/bin/python3.15 -m py_compile scripts/generate_catalogs.py
 ```
 
 Also check configuration syntax and whitespace before submitting:
 
 ```sh
-/opt/homebrew/bin/python3.14 -m json.tool images.json >/dev/null
+/opt/homebrew/bin/python3.15 -m json.tool images.json >/dev/null
 /opt/homebrew/bin/git diff --check
 ```
 

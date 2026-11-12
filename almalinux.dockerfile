@@ -1,7 +1,7 @@
 # Containerfile.cnpg-postgresql-source
 
-ARG BASE=docker.io/almalinux:10-kitten-minimal@sha256:482ebbd308f144d8d509834a79c29b5f7c031b9b987339372c6dd65213806c2e
-ARG BUILD_BASE=docker.io/almalinux:10-kitten@sha256:e6509c21c3c99e24d97ad3a3c3f16c757f10ec397f79f40568c1bb010d916f21
+ARG BASE=docker.io/almalinux:10-kitten-minimal@sha256:ae73894c2866ef9b1ecb1214775022e93cb17d0d210aecd54a1bdb2444ce91cc
+ARG BUILD_BASE=docker.io/almalinux:10-kitten@sha256:d423f3aefa92fc133660ea2eac2aeb09c874f30d5199fc9cd890f2410b206e1b
 ARG IMAGE_TITLE="CloudNativePG PostgreSQL on AlmaLinux"
 ARG IMAGE_DESCRIPTION="PostgreSQL built from upstream source on AlmaLinux for CloudNativePG."
 ARG IMAGE_AUTHORS="Paul Christophel <pmartin@gatech.edu>"
@@ -17,8 +17,8 @@ ARG IMAGE_LICENSES="AGPL-3.0-or-later"
 
 FROM $BUILD_BASE AS postgres-builder
 ARG PG_MAJOR=18
-ARG PG_VERSION=18.6
-ARG PG_SHA256=555610c24d53e4316da5b7d3fc25c279d96856d5e0e23ee308c328c5fa881d9f
+ARG PG_VERSION=18.7
+ARG PG_SHA256=441dfae4280cae3e0425e5f876f80559fb0731c140f1aae22b3e5a54d0411bfd
 ARG POSTGRES_CFLAGS="-O2 -pipe -fstack-protector-strong -D_FORTIFY_SOURCE=3"
 ARG CPU_CFLAGS=""
 ARG POSTGRES_LDFLAGS="-Wl,-z,relro,-z,now -Wl,--as-needed"
@@ -237,7 +237,7 @@ RUN runtime_packages="\
 FROM scratch
 ARG BASE
 ARG PG_MAJOR=18
-ARG PG_VERSION=18.6
+ARG PG_VERSION=18.7
 ARG WITH_UNTRUSTED_LANGUAGES=false
 ARG PYTHON_VERSION=not-installed
 ARG PERL_VERSION=not-installed

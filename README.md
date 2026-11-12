@@ -2,7 +2,7 @@
 
 This repository builds PostgreSQL standard images from upstream source for use
 with [CloudNativePG](https://cloudnative-pg.io/). Each PostgreSQL release is
-built on five maintained Linux distributions, providing a practical range of
+built on four maintained Linux distributions, providing a practical range of
 compiler and system-library versions without relying on Linux releases that
 are already near the end of their support life.
 
@@ -91,7 +91,7 @@ their untrusted procedural languages. Tags ending in `-untrusted` add
 Tags combine a PostgreSQL version with the image variant. For example:
 
 ```text
-18.4-standard-photon5
+18.7-standard-photon5
 18-standard-tumbleweed
 18-standard-rocky10-untrusted
 ```
@@ -136,7 +136,7 @@ cluster requires Perl, Python, or Tcl untrusted procedural languages.
 ## Building locally
 
 The Dockerfiles accept the same build arguments used by the release workflow.
-Their defaults currently build PostgreSQL 18.4 with pg_cron 1.6.7, pgvector
+Their defaults currently build PostgreSQL 18.7 with pg_cron 1.6.8, pgvector
 0.8.7, and pgAudit 18.0. For a local Photon build using those defaults:
 
 ```sh
@@ -169,5 +169,5 @@ opens an automatically merged catalog update pull request.
 
 Base images and downloaded source archives are digest- or checksum-pinned.
 Updating a PostgreSQL release, extension revision, or image variant should
-therefore begin in `images.json`; base-image updates belong in the relevant
-Dockerfile.
+therefore begin in `images.json`. Keep the corresponding Dockerfile defaults
+in sync, including base-image pins and separate `BUILD_BASE` pins where present.
