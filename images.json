@@ -69,17 +69,17 @@
     "rocky10": {
       "name": "rockylinux",
       "version": "10",
-      "base": "docker.io/rockylinux/rockylinux:10-ubi-micro@sha256:21de8cc837c528e9fce56577968ce19908eaab6b06d48e5f94b1efd39f0a0e0d"
+      "base": "docker.io/rockylinux/rockylinux:10-ubi-micro@sha256:122035c996c428fa4fa4bc304489b3eabdcbc5e36a6a429c98c619e536d7b88e"
     },
     "alma10": {
       "name": "almalinux-kitten",
       "version": "10",
-      "base": "docker.io/almalinux:10-kitten-minimal@sha256:ae73894c2866ef9b1ecb1214775022e93cb17d0d210aecd54a1bdb2444ce91cc"
+      "base": "docker.io/almalinux:10-kitten-minimal@sha256:0a56c4d7ffd688c45e7b6baea17693b6dba85deb7d20bc6dfa0c7fb68dde5383"
     },
     "azure3": {
       "name": "azurelinux",
       "version": "3.0",
-      "base": "mcr.microsoft.com/azurelinux/base/core:3.0@sha256:bfb630450e9c3d7428d59f25ce6df95ba5634d664d96b06017aa56f87da5ec0e"
+      "base": "mcr.microsoft.com/azurelinux/base/core:3.0@sha256:3d16d8799f71a78f5bddb3b7cda4a57df1f40ecfa58bac89933010596aa86880"
     },
     "azure4": {
       "name": "azurelinux",
@@ -88,8 +88,8 @@
     },
     "tumbleweed": {
       "name": "tumbleweed",
-      "version": "20261116",
-      "base": "docker.io/opensuse/tumbleweed:latest@sha256:14d536cfce86a7dbab858a4358f74634cf60a4a944e8e00acc89fbc153077e88"
+      "version": "20261117",
+      "base": "docker.io/opensuse/tumbleweed:latest@sha256:0291572c0625600845eb4e372d2ef391ac1278d55ae75568e9f663dbeed4a877"
     }
   },
   "postgresql": [
