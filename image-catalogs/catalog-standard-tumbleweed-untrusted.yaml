@@ -6,14 +6,14 @@ metadata:
     images.cnpg.io/family: postgresql
     images.cnpg.io/type: standard
     images.cnpg.io/os: tumbleweed
-    images.cnpg.io/date: "20261127"
+    images.cnpg.io/date: "20261128"
     images.cnpg.io/publisher: docker.io
     images.cnpg.io/languages: untrusted
 spec:
   images:
     - major: 16
-      image: docker.io/pcm0/postgres@sha256:1a9f536368e25c1166435abd5c37b7aba42b55af05caf314371ffc7a0532b242
+      image: docker.io/pcm0/postgres@sha256:e2ac06a99a08f81d65ddf49462af2830bda04bcc45e6f03785d6893becfc26d6
     - major: 17
-      image: docker.io/pcm0/postgres@sha256:04fcdcf829ebd13f7690b4a7d6357becde71b2209a6b9271a1b08041044f8b98
+      image: docker.io/pcm0/postgres@sha256:36ae6d6abff63362c973164aebad45f49326cec6d153660343e00a4a8999337a
     - major: 18
-      image: docker.io/pcm0/postgres@sha256:9210ac8882af65829bf50b7b3abbb169a1720b290f4a18e2e3b3c69d05778b49
+      image: docker.io/pcm0/postgres@sha256:a1432f5e0be5e65aa0b6d2c7ed19f42cb50c3a6b764ede829cc0099ca482be89
